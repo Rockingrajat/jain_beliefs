@@ -757,10 +757,10 @@ const questions = [
     options: [
       "It was adharm \u2014 funding war is karit-himsa (getting violence done through others), period",
       "It was dharm because he was protecting Hindu dharma and his motherland",
-      "The act itself involves arambhi-himsa (occupational violence), which a shravak accepts within anu-vrat. But the KEY factor is bhav: Bhamashah acted from kartavya (duty) without personal raag/dvesh \u2014 not from hatred of Mughals or greed for power.",
-      "It was a necessary evil \u2014 sometimes paap must be done for a greater good"
+      "It was a necessary evil \u2014 sometimes paap must be done for a greater good",
+      "Shravak anu-vrat permits arambhi-himsa. The key factor is bhav \u2014 kartavya without personal raag/dvesh binds lighter karma."
     ],
-    correct: 2,
+    correct: 3,
     explanation: "This is where Jain ethics becomes sophisticated beyond simple rules. Option A applies a muni-level maha-vrat standard to a householder, which is incorrect \u2014 shravaks operate under <strong>anu-vrat</strong> which permits arambhi-himsa (occupational/duty-bound violence) within limits. Option B invokes non-Jain reasoning (protecting dharma/nation). Option D introduces \u201cgreater good\u201d utilitarianism which Jainism doesn\u2019t accept.<br><br>The Jain analysis centers on <strong>bhav (internal state)</strong>: Was Bhamashah driven by dvesh (hatred) toward the enemy or raag (ambition) for power? Or by a measured sense of kartavya (duty) with minimal kashaya? <strong>The same external act binds different karma based on the bhav behind it.</strong> A shravak performing his worldly duty with awareness and minimal kashaya is on the path \u2014 not fallen from it.",
     sanskrit: "\u201cKarya ek, bhav bhinn \u2014 bandh bhi bhinn.\u201d"
   },
@@ -785,10 +785,10 @@ const questions = [
     scenario: "History \u2014 Bharat Chakravarti",
     question: "Bharat Chakravarti conquered the entire known world, became Chakravarti Samrat (emperor of six khand), ruled with immense power and wealth \u2014 and then renounced everything and attained Moksha IN THE SAME LIFETIME. What is the deepest teaching from his story?",
     options: [
-      "Power and wealth must eventually be renounced \u2014 they are obstacles to moksha",
-      "Bharat was a special soul (tirthankar-gotriya) from birth, so his story is inspirational but doesn\u2019t apply to ordinary people",
-      "Laukik karya karte hue bhi anasakt rehna possible hai \u2014 it is possible to perform worldly duties at the highest level while remaining internally detached. Moksha doesn\u2019t require avoiding the world \u2014 it requires being unbound by it.",
-      "His conquests were dharm because he unified the world under righteous Jain rule"
+      "Satta aur sampatti moksha ke baadha hain \u2014 inhe tyaagna zaroori hai",
+      "Bharat vishisht aatma the \u2014 unki katha prerna hai, par saamaanya jeev ke liye laagu nahi hoti",
+      "Laukik karya karte hue bhi anasakt rehna sambhav hai \u2014 moksha sansaar tyaagne se nahi, sansaar se nir-mohi rehne se milta hai",
+      "Unke vijay-abhiyaan dharm the kyunki unhonne sampoorna vishwa ko Jain shaasan mein ekjut kiya"
     ],
     correct: 2,
     explanation: "This is one of Jainism\u2019s most powerful teachings, and it directly counters two common misconceptions:<br><br><strong>Misconception 1:</strong> \u201cYou must leave the world to achieve moksha.\u201d Bharat didn\u2019t achieve moksha DESPITE his worldly life \u2014 his ability to renounce at the peak proves he was <strong>anasakt (unattached) even while ruling</strong>. The renunciation was the final confirmation of detachment that already existed internally.<br><br><strong>Misconception 2:</strong> \u201cSpiritual people should avoid worldly success.\u201d Bharat conquered the ENTIRE world. His spiritual greatness wasn\u2019t diminished by his worldly greatness. <strong>Vitaraagta (detachment) is an internal state, not an external condition.</strong><br><br>Option A reduces the story to \u201cwealth is bad\u201d \u2014 missing that the teaching is about performing duties WHILE unattached. Option B makes it an exception rather than a universal teaching. The real seekh: you can be a CEO, a king, a warrior \u2014 and still walk the moksha-marg, if your bhav is anasakt.",
@@ -1128,7 +1128,7 @@ function showResults() {
 
   // Pick 3 random, non-repeating wisdom cards
   const shuffled = [...wisdomCards].sort(() => Math.random() - 0.5);
-  const picked = shuffled.slice(0, 3);
+  const picked = shuffled.slice(0, 1);
 
   const wisdomHTML = picked.map(w => `
     <div class="wisdom-card">
