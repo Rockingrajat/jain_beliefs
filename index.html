@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jain Darshan Quiz - Think Before You Believe</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --bg: #0f0f1a;
+    --card: #1a1a2e;
+    --card-hover: #22223a;
+    --accent: #e8a838;
+    --accent-glow: rgba(232, 168, 56, 0.25);
+    --correct: #2ecc71;
+    --correct-bg: rgba(46, 204, 113, 0.12);
+    --wrong: #e74c3c;
+    --wrong-bg: rgba(231, 76, 60, 0.12);
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --border: #2a2a44;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Landing Page */
+  #landing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    animation: fadeIn 1s ease;
+  }
+
+  #landing h1 {
+    font-size: 2.8em;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), #f0c36d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+
+  #landing .subtitle {
+    font-size: 1.1em;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 300;
+  }
+
+  #landing .tagline {
+    font-size: 1.3em;
+    color: var(--text);
+    margin-bottom: 40px;
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  #landing .desc {
+    font-size: 0.95em;
+    color: var(--text-dim);
+    max-width: 550px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  .btn-start {
+    background: linear-gradient(135deg, var(--accent), #d4912e);
+    color: #111;
+    border: none;
+    padding: 16px 48px;
+    font-size: 1.15em;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-start:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px var(--accent-glow);
+  }
+
+  /* Progress Bar */
+  .progress-container {
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-bottom: 30px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #f0c36d);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  .question-counter {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85em;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* Quiz Card */
+  #quiz { display: none; }
+
+  .quiz-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 32px;
+    margin-bottom: 20px;
+    animation: slideUp 0.5s ease;
+  }
+
+  .scenario-label {
+    display: inline-block;
+    background: var(--accent-glow);
+    color: var(--accent);
+    font-size: 0.75em;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .question-text {
+    font-size: 1.2em;
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .option-btn {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: var(--text);
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .option-btn:hover:not(.disabled) {
+    border-color: var(--accent);
+    background: var(--card-hover);
+    transform: translateX(4px);
+  }
+
+  .option-btn .opt-letter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--border);
+    font-weight: 600;
+    font-size: 0.9em;
+    color: var(--text-dim);
+    transition: all 0.25s;
+  }
+
+  .option-btn:hover:not(.disabled) .opt-letter {
+    background: var(--accent);
+    color: #111;
+  }
+
+  .option-btn.correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+  .option-btn.correct .opt-letter {
+    background: var(--correct);
+    color: #111;
+  }
+
+  .option-btn.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+  .option-btn.wrong .opt-letter {
+    background: var(--wrong);
+    color: #fff;
+  }
+
+  .option-btn.disabled { cursor: default; opacity: 0.7; }
+  .option-btn.disabled:hover { transform: none; border-color: var(--border); background: var(--bg); }
+  .option-btn.correct.disabled, .option-btn.wrong.disabled { opacity: 1; }
+
+  /* Explanation */
+  .explanation {
+    margin-top: 24px;
+    padding: 20px 24px;
+    border-radius: 12px;
+    border-left: 4px solid var(--accent);
+    background: rgba(232, 168, 56, 0.06);
+    animation: fadeIn 0.4s ease;
+    line-height: 1.75;
+    font-size: 0.95em;
+  }
+
+  .explanation .exp-title {
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-size: 0.85em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .explanation .sanskrit {
+    display: block;
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    font-style: italic;
+    color: #f0c36d;
+    font-size: 0.95em;
+  }
+
+  .btn-next {
+    display: block;
+    margin: 28px auto 0;
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    padding: 12px 40px;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .btn-next:hover {
+    background: var(--accent);
+    color: #111;
+  }
+
+  /* Results */
+  #results { display: none; }
+
+  .results-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 32px;
+    text-align: center;
+    animation: slideUp 0.5s ease;
+  }
+
+  .score-ring {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+
+  .score-ring svg { transform: rotate(-90deg); }
+  .score-ring circle {
+    fill: none;
+    stroke-width: 8;
+  }
+  .score-ring .bg { stroke: var(--border); }
+  .score-ring .fg {
+    stroke: var(--accent);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.5s ease;
+  }
+
+  .score-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.2em;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .results-card h2 {
+    font-size: 1.6em;
+    margin-bottom: 8px;
+  }
+
+  .results-card .result-msg {
+    color: var(--text-dim);
+    font-size: 1em;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+
+  .results-breakdown {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+
+  .results-breakdown .stat {
+    text-align: center;
+  }
+
+  .results-breakdown .stat-num {
+    font-size: 1.8em;
+    font-weight: 700;
+  }
+
+  .results-breakdown .stat-label {
+    font-size: 0.8em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .stat-correct .stat-num { color: var(--correct); }
+  .stat-wrong .stat-num { color: var(--wrong); }
+
+  .key-takeaways {
+    text-align: left;
+    margin-top: 30px;
+    padding: 24px;
+    background: var(--bg);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .key-takeaways h3 {
+    color: var(--accent);
+    margin-bottom: 14px;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+  }
+
+  .key-takeaways ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .key-takeaways li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9em;
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+
+  .key-takeaways li:last-child { border-bottom: none; }
+  .key-takeaways li::before {
+    content: "~ ";
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 600px) {
+    #landing h1 { font-size: 2em; }
+    .quiz-card { padding: 24px 18px; }
+    .question-text { font-size: 1.05em; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- LANDING -->
+  <div id="landing">
+    <h1>Jain Darshan Quiz</h1>
+    <p class="subtitle">Terapanth Perspective</p>
+    <p class="tagline">"What you think is dharm... might not be."</p>
+    <p class="desc">
+      15 scenario-based questions that challenge everyday assumptions about punya, paap, dharm, and ahinsa. Each answer comes with a philosophical explanation rooted in Acharya Tulsi and Acharya Mahapragya's teachings.
+    </p>
+    <button class="btn-start" onclick="startQuiz()">Begin the Quiz</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz">
+    <div class="question-counter" id="qCounter"></div>
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="quiz-card" id="quizCard"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results"></div>
+
+</div>
+
+<script>
+const questions = [
+  {
+    scenario: "Daily Life",
+    question: "You help an elderly person cross a busy road. Did you earn Punya (merit)?",
+    options: [
+      "Yes, helping others always earns Punya",
+      "Yes, but only if done without expectation",
+      "No \u2014 Punya is not earned through actions, it is a by-product of Nirjara",
+      "It depends on the person you helped"
+    ],
+    correct: 2,
+    explanation: "In Jain darshan, Punya is NOT the goal \u2014 it is a by-product. The real goal is <strong>Nirjara</strong> (shedding of karma). When you perform <strong>niravadya pravritti</strong> (activity free from paap/himsa), nirjara occurs naturally, and punya may arise as a side-effect. Seeking punya as a goal is itself a form of attachment (raag).",
+    sanskrit: "\u201cPunya-paap dono bandhan hain, moksha in dono se mukti hai.\u201d"
+  },
+  {
+    scenario: "Temple Worship",
+    question: "In a Jain temple, someone offers fresh flowers, lights a ghee diya, and burns incense. Is this considered Dharm according to Terapanth?",
+    options: [
+      "Yes, it is devotion and therefore Dharm",
+      "Yes, but only if done with pure intention",
+      "No \u2014 it involves himsa of ekendriya jeev (one-sensed organisms) and cannot be Dharm",
+      "It's optional but still meritorious"
+    ],
+    correct: 2,
+    explanation: "Terapanth holds that <strong>Ahinsa Paramo Dharmah</strong> is absolute. Plucking flowers kills plant life (ekendriya jeev). Lighting diyas/incense burns organisms in fire (agni-kaay jeev). Since dharm cannot involve any form of himsa, these rituals \u2014 however devotional they feel \u2014 are not dharm. Terapanth practices <strong>nirgun upasana</strong> (worship without material offerings).",
+    sanskrit: "\u201cAhinsa paramo dharmah \u2014 this is not a slogan, it is the test of every action.\u201d"
+  },
+  {
+    scenario: "Charity",
+    question: "A wealthy Jain family donates crores to build a hospital. Is this Dharm?",
+    options: [
+      "Absolutely \u2014 saving lives is the highest Dharm",
+      "Yes, daan (charity) is one of the pillars of Jain Dharm",
+      "No \u2014 Daan is a social virtue, not Dharm. Dharm is only that which leads to Nirjara/Moksha",
+      "Only if the hospital is vegetarian"
+    ],
+    correct: 2,
+    explanation: "Terapanth makes a sharp distinction: <strong>Dharm = only that which leads to moksha</strong> (samvar + nirjara). Charity, social service, and philanthropy are <strong>vyavahar</strong> (worldly/social virtues) \u2014 good, commendable, but not dharm in the technical Jain sense. Confusing social good with dharm dilutes the pursuit of moksha. Acharya Bhikshu emphasized this distinction strongly.",
+    sanskrit: "\u201cDharm vahi hai jo aatma ko moksha ki or le jaye. Baaki sab vyavahar hai.\u201d"
+  },
+  {
+    scenario: "Food Choices",
+    question: "You strictly avoid onion, garlic, and root vegetables. A friend asks: \u201cIsn\u2019t avoiding root vegetables just a cultural habit?\u201d What is the Jain philosophical reason?",
+    options: [
+      "They are tamasic foods that cloud the mind",
+      "Uprooting them kills the entire plant \u2014 it is himsa of vanaspati-kaay (plant-bodied) jeev, and they house anant-kaay (infinite organisms)",
+      "It's purely a tradition with no philosophical basis",
+      "They cause digestive problems during meditation"
+    ],
+    correct: 1,
+    explanation: "Root vegetables are <strong>anant-kaay</strong> \u2014 they contain infinite (anant) organisms in a single body. Uprooting a potato or onion destroys not one but potentially infinite jeevas. This is a much higher degree of himsa than eating above-ground vegetables. It's not cultural \u2014 it's rooted in the Jain understanding of <strong>jeev-vichar</strong> (consciousness classification).",
+    sanskrit: "\u201cAnant-kaay mein anant jeev \u2014 ek kand mein anek praan.\u201d"
+  },
+  {
+    scenario: "Paryushan",
+    question: "During Paryushan, you fast for 8 days and feel immense pride: \u201cNo one else in my family could do this!\u201d Has your fasting achieved its spiritual purpose?",
+    options: [
+      "Yes \u2014 the physical tapasya itself purifies karma",
+      "Partially \u2014 the fasting helped, but the pride reduced its effect",
+      "No \u2014 Maan (ego/pride) is a kashaya. Your fasting fueled karma bondage, not nirjara",
+      "Yes, as long as you did Pratikraman afterwards"
+    ],
+    correct: 2,
+    explanation: "The four <strong>kashayas</strong> (passions) \u2014 Krodh (anger), Maan (pride), Maya (deceit), Lobh (greed) \u2014 are the primary causes of karma bondage. If your tapasya produces pride, you are <strong>binding new karma even while trying to shed old karma</strong>. True tapasya requires complete bhav-shuddhi (purity of internal state). The external act without internal purity is hollow.",
+    sanskrit: "\u201cMaan kashaya se nikla tap, tap nahi \u2014 bandhan hai.\u201d"
+  },
+  {
+    scenario: "Moral Dilemma",
+    question: "You see a goat about to be slaughtered. You buy it from the butcher to save its life. Have you performed Dharm?",
+    options: [
+      "Yes \u2014 you saved a life, which is the highest ahinsa",
+      "Yes, this is daya-dharm (compassion-dharma)",
+      "No \u2014 this is daya (compassion), a social virtue. Dharm is strictly nirjara-oriented. Also, the money may fund the butcher to buy more animals.",
+      "Only if you also became vegetarian yourself"
+    ],
+    correct: 2,
+    explanation: "This is a famous Terapanth position that drew controversy. Acharya Bhikshu argued: <strong>Daya (compassion) is not dharm</strong>. It is a noble social instinct, but dharm in its precise meaning is only self-purification leading to moksha. Moreover, purchasing the goat gives the butcher capital to acquire more animals \u2014 the net himsa may not reduce. This challenges us to think beyond emotional reactions.",
+    sanskrit: "\u201cDaya dharm ka mool hai \u2014 yeh kahavat hai, siddhant nahi.\u201d"
+  },
+  {
+    scenario: "Daily Routine",
+    question: "You do Pratikraman every evening, reciting all the sutras perfectly from memory. But during the day, you spoke harshly to your employee and lied to a client. Is your Pratikraman effective?",
+    options: [
+      "Yes \u2014 Pratikraman specifically exists to wash away the day's sins",
+      "Partially \u2014 it reduces karma but doesn't eliminate it",
+      "No \u2014 Pratikraman without genuine pratigya (resolve to not repeat) is just ritual. Mechanical recitation without bhav is not praayashchit.",
+      "Yes, if you add extra Pratikraman for the specific sins"
+    ],
+    correct: 2,
+    explanation: "Pratikraman literally means <strong>\u201cgoing back\u201d (prati = back, kraman = steps)</strong> \u2014 returning from wrongful conduct. It requires three elements: <strong>recognition</strong> (I did wrong), <strong>remorse</strong> (genuine regret), and <strong>resolve</strong> (I will not repeat). Without all three \u2014 especially the resolve \u2014 it's mere recitation, not spiritual practice. Many treat it as an automatic reset button, which defeats its purpose.",
+    sanskrit: "\u201cJo jaane apne dosh ko, so hi hai praayashchit.\u201d"
+  },
+  {
+    scenario: "Social Pressure",
+    question: "At a community gathering, elders say: \u201cBeing a good Jain means donating to build more mandirs.\u201d From a Terapanth perspective, is mandir-nirman (temple construction) Dharm?",
+    options: [
+      "Yes \u2014 mandirs inspire devotion in the community",
+      "Yes, it earns punya for the donor and benefits everyone",
+      "No \u2014 Terapanth does not believe in idol worship or temple construction. Dharm is internal, not in stone structures.",
+      "Only if the mandir follows satvik construction practices"
+    ],
+    correct: 2,
+    explanation: "Terapanth is <strong>nir-granthi</strong> (non-attached to material religion). It does not practice murti-puja (idol worship) or build temples. The reasoning: <strong>the soul's path to moksha is internal</strong>. Constructing elaborate external structures can become another form of parigraha (attachment/possession) and maan (pride). Acharya Bhikshu emphasized direct sadhana over institutional religion.",
+    sanskrit: "\u201cMandir mann mein hai, pathar mein nahi.\u201d"
+  },
+  {
+    scenario: "Thought Experiment",
+    question: "You have NEVER physically harmed any living being in your life. But you frequently feel intense jealousy and anger towards others. Are you practicing Ahinsa?",
+    options: [
+      "Yes \u2014 ahinsa means non-violence in action",
+      "Mostly \u2014 you're practicing physical ahinsa which is the most important",
+      "No \u2014 Jainism recognizes himsa of mann (mind), vachan (speech), and kaay (body). Mental violence is still himsa.",
+      "Partially \u2014 you're halfway there"
+    ],
+    correct: 2,
+    explanation: "Jain ahinsa operates at <strong>three levels: mann (thought), vachan (speech), kaay (body)</strong> \u2014 AND in <strong>three modes: krit (doing), karit (getting done), anumodana (approving)</strong>. That's 3\u00d73 = 9 forms of himsa. Feeling anger IS himsa of the mind. Even silently approving someone else's violence is himsa through anumodana. True ahinsa is extraordinarily comprehensive.",
+    sanskrit: "\u201cMann, vachan, kaaya \u2014 teen yog. Krit, karit, anumodana \u2014 teen kaaran. Nav prakaar ki himsa tyaagni hai.\u201d"
+  },
+  {
+    scenario: "Water & Nature",
+    question: "You see water being wasted from an open tap. Why would a Jain be specifically concerned beyond just \u201csaving the environment\u201d?",
+    options: [
+      "Water is expensive and shouldn't be wasted",
+      "Wasting water is against Aparigraha (non-possessiveness)",
+      "Water contains Jal-kaay jeev (water-bodied organisms). Wasting water = unnecessary himsa of countless water-bodied souls.",
+      "It shows carelessness, which is against Jain discipline"
+    ],
+    correct: 2,
+    explanation: "In Jain cosmology, water is not just H\u2082O \u2014 it contains <strong>jal-kaay jeev</strong> (water-bodied, one-sensed living beings). Every drop of water unnecessarily wasted means unnecessary destruction of these jeev. This is why Jain munis are extremely careful with water usage \u2014 not for environmental reasons, but because it is <strong>sthool himsa</strong> (gross violence). The environmental benefit is a side-effect, not the motivation.",
+    sanskrit: "\u201cJal mein jeev, agni mein jeev, vayu mein jeev \u2014 sab mein praan.\u201d"
+  },
+  {
+    scenario: "Business Ethics",
+    question: "A Jain businessman earns honestly, pays fair wages, and never cheats. But he deals in leather goods. From a Jain perspective, what's the issue?",
+    options: [
+      "No issue \u2014 he's honest and fair",
+      "Minor issue \u2014 it's not ideal but his honesty compensates",
+      "Serious issue \u2014 trading in leather involves anumodana (endorsement) of himsa. Honesty in paap-pravritti doesn't make it dharm.",
+      "Only an issue if he's personally involved in manufacturing"
+    ],
+    correct: 2,
+    explanation: "Jainism lists <strong>15 types of trades (karma-adaan)</strong> a shravak should avoid, including those involving animal products. Even if you don't personally kill the animal, <strong>dealing in leather is karit-himsa (getting himsa done through others) and anumodana-himsa (endorsing the chain of violence)</strong>. Being honest within a harmful trade doesn't transform the trade into dharma. The business itself needs to be niravadya (violence-free).",
+    sanskrit: "\u201cSatya aur ahinsa mein ahinsa uchchtam hai \u2014 satya bhi ahinsa ke adheen hai.\u201d"
+  },
+  {
+    scenario: "Modern Debate",
+    question: "Someone says: \u201cJainism is just about non-violence and vegetarianism.\u201d What is the most accurate correction?",
+    options: [
+      "It's also about meditation and inner peace",
+      "It's also about fasting and rituals",
+      "Jainism is fundamentally about the soul's journey to moksha through Samvar (stopping new karma) and Nirjara (shedding existing karma). Ahinsa is the primary means, not the end goal.",
+      "It's also about community service and charity"
+    ],
+    correct: 2,
+    explanation: "Reducing Jainism to non-violence and vegetarianism is like reducing physics to \u201cthings fall down.\u201d The core framework is: <strong>Aasrav</strong> (influx of karma) \u2192 <strong>Bandh</strong> (bondage) \u2192 <strong>Samvar</strong> (stopping influx) \u2192 <strong>Nirjara</strong> (shedding) \u2192 <strong>Moksha</strong> (liberation). Ahinsa, satya, achaurya, brahmacharya, and aparigraha are MEANS to achieve samvar. They are critical tools, not the destination.",
+    sanskrit: "\u201cSamvar aur nirjara \u2014 yahi dharm ka saar hai.\u201d"
+  },
+  {
+    scenario: "Relationships",
+    question: "You feel deep attachment and love for your family. A Jain perspective would say:",
+    options: [
+      "Family love is beautiful and should be nurtured",
+      "Love is fine as long as you also love all beings equally",
+      "Moha (attachment) \u2014 even towards family \u2014 is a form of raag (attraction), which causes karma bondage. Love without attachment is the ideal.",
+      "Family comes first, spirituality comes second"
+    ],
+    correct: 2,
+    explanation: "This is perhaps the hardest Jain teaching to internalize. <strong>Raag (attraction) and Dvesh (aversion) are the two fundamental causes of karma bondage.</strong> Family attachment is raag. This doesn't mean you should be cold or uncaring \u2014 rather, you should practice <strong>vitaraagta</strong> (equanimity without attachment). Care for family out of duty and compassion, not out of possessive attachment. Mahavir left his family not out of indifference, but to transcend moha.",
+    sanskrit: "\u201cRaag-dvesh se karma bandh, vitaraagta se moksha.\u201d"
+  },
+  {
+    scenario: "Self-Defense",
+    question: "A Jain is being physically attacked. Can they fight back in self-defense?",
+    options: [
+      "Yes \u2014 self-defense is a natural right",
+      "Yes, but only proportional force",
+      "For a shravak (householder), limited self-defense is permitted with minimal force. For a muni (monk), even self-defense involves himsa and must be avoided \u2014 they must endure.",
+      "No Jain should ever fight under any circumstance"
+    ],
+    correct: 2,
+    explanation: "Jainism has <strong>different standards for shravak (layperson) and muni (monk)</strong>. A shravak follows <strong>anu-vrat</strong> (small vows) \u2014 partial non-violence, allowing for self-preservation. A muni follows <strong>maha-vrat</strong> (great vows) \u2014 absolute non-violence, even at the cost of their own life. This graduated path acknowledges that complete renunciation requires extraordinary spiritual preparation. Neither position is \u201canything goes.\u201d",
+    sanskrit: "\u201cShravak ke anu-vrat, muni ke maha-vrat \u2014 marg ek, sthiti bhinn.\u201d"
+  },
+  {
+    scenario: "Death & Dying",
+    question: "An elderly Jain monk voluntarily gives up food and water, eventually passing away. Is this suicide?",
+    options: [
+      "Yes \u2014 any voluntary death is suicide",
+      "It's a grey area \u2014 technically self-harm",
+      "No \u2014 Santhara/Sallekhana is a conscious, passionless withdrawal from the body when death is imminent. It is performed without kashaya (passion) or fear \u2014 the opposite of suicide.",
+      "Only acceptable for monks, not for laypeople"
+    ],
+    correct: 2,
+    explanation: "<strong>Santhara (Sallekhana)</strong> is fundamentally different from suicide. Suicide is driven by <strong>dvesh</strong> (aversion to life, despair, anger). Santhara is driven by <strong>vitaraagta</strong> (equanimity, spiritual readiness). It is undertaken when the body can no longer sustain spiritual practice, under guidance of an Acharya, with complete mental clarity and absence of kashayas. It is the <strong>ultimate expression of non-attachment to the body</strong> \u2014 meeting death with awareness rather than being overtaken by it.",
+    sanskrit: "\u201cDeh ka tyaag raag-dvesh rahit ho \u2014 yahi santhara hai.\u201d"
+  }
+];
+
+let currentQ = 0;
+let score = 0;
+let answers = [];
+
+function startQuiz() {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQ];
+  const total = questions.length;
+
+  document.getElementById('qCounter').textContent = `QUESTION ${currentQ + 1} OF ${total}`;
+  document.getElementById('progressBar').style.width = `${((currentQ) / total) * 100}%`;
+
+  let optionsHTML = q.options.map((opt, i) => {
+    const letter = String.fromCharCode(65 + i);
+    return `<button class="option-btn" onclick="selectAnswer(${i})" id="opt-${i}">
+      <span class="opt-letter">${letter}</span>
+      <span>${opt}</span>
+    </button>`;
+  }).join('');
+
+  document.getElementById('quizCard').innerHTML = `
+    <span class="scenario-label">${q.scenario}</span>
+    <p class="question-text">${q.question}</p>
+    <div class="options" id="optionsContainer">${optionsHTML}</div>
+  `;
+}
+
+function selectAnswer(idx) {
+  const q = questions[currentQ];
+  const isCorrect = idx === q.correct;
+
+  if (isCorrect) score++;
+  answers.push({ question: currentQ, selected: idx, correct: q.correct, isCorrect });
+
+  // Disable all buttons
+  document.querySelectorAll('.option-btn').forEach((btn, i) => {
+    btn.classList.add('disabled');
+    if (i === q.correct) btn.classList.add('correct');
+    if (i === idx && !isCorrect) btn.classList.add('wrong');
+  });
+
+  // Show explanation
+  const expDiv = document.createElement('div');
+  expDiv.className = 'explanation';
+  expDiv.innerHTML = `
+    <div class="exp-title">${isCorrect ? 'Correct!' : 'Not quite.'} Here\'s why:</div>
+    <div>${q.explanation}</div>
+    <span class="sanskrit">${q.sanskrit}</span>
+  `;
+  document.getElementById('quizCard').appendChild(expDiv);
+
+  // Next button
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'btn-next';
+  nextBtn.textContent = currentQ < questions.length - 1 ? 'Next Question \u2192' : 'See Results \u2192';
+  nextBtn.onclick = () => {
+    currentQ++;
+    if (currentQ < questions.length) {
+      showQuestion();
+    } else {
+      showResults();
+    }
+  };
+  document.getElementById('quizCard').appendChild(nextBtn);
+
+  // Update progress
+  document.getElementById('progressBar').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
+}
+
+function showResults() {
+  document.getElementById('quiz').style.display = 'none';
+  const resultsDiv = document.getElementById('results');
+  resultsDiv.style.display = 'block';
+
+  const pct = Math.round((score / questions.length) * 100);
+  const circumference = 2 * Math.PI * 68;
+  const offset = circumference - (pct / 100) * circumference;
+
+  let msg = '';
+  if (pct >= 80) msg = 'Excellent! You have a strong grasp of Jain darshan fundamentals. Keep questioning and exploring deeper.';
+  else if (pct >= 60) msg = 'Good understanding, but some common misconceptions still linger. Review the explanations to strengthen your philosophical foundation.';
+  else if (pct >= 40) msg = 'Many everyday assumptions don\'t align with core Jain philosophy. This quiz is a starting point \u2014 revisit the explanations carefully.';
+  else msg = 'Most of your intuitions followed popular belief rather than Jain siddhant. That\'s okay \u2014 this quiz exists precisely for this reason. Read each explanation and reflect.';
+
+  resultsDiv.innerHTML = `
+    <div class="results-card">
+      <div class="score-ring">
+        <svg width="160" height="160" viewBox="0 0 160 160">
+          <circle class="bg" cx="80" cy="80" r="68"/>
+          <circle class="fg" cx="80" cy="80" r="68"
+            stroke-dasharray="${circumference}"
+            stroke-dashoffset="${circumference}"
+            id="scoreCircle"/>
+        </svg>
+        <div class="score-text">${pct}%</div>
+      </div>
+
+      <h2>${score} out of ${questions.length}</h2>
+      <p class="result-msg">${msg}</p>
+
+      <div class="results-breakdown">
+        <div class="stat stat-correct">
+          <div class="stat-num">${score}</div>
+          <div class="stat-label">Correct</div>
+        </div>
+        <div class="stat stat-wrong">
+          <div class="stat-num">${questions.length - score}</div>
+          <div class="stat-label">Incorrect</div>
+        </div>
+      </div>
+
+      <div class="key-takeaways">
+        <h3>Key Takeaways to Remember</h3>
+        <ul>
+          <li>Punya is a by-product of Nirjara, not a goal. Both Punya and Paap are bondage.</li>
+          <li>Dharm = only that which leads to Moksha (Samvar + Nirjara). Social good \u2260 Dharm.</li>
+          <li>Ahinsa operates at 3 levels (mann, vachan, kaay) \u00d7 3 modes (krit, karit, anumodana) = 9 forms.</li>
+          <li>Kashayas (Krodh, Maan, Maya, Lobh) negate even genuine tapasya.</li>
+          <li>Terapanth: No idol worship, no material offerings. Dharm is internal sadhana.</li>
+          <li>Raag (attachment) and Dvesh (aversion) are the root causes of karma bondage.</li>
+          <li>Santhara \u2260 Suicide. It is passionless, conscious withdrawal \u2014 opposite of despair.</li>
+        </ul>
+      </div>
+
+      <button class="btn-start" style="margin-top: 30px;" onclick="restartQuiz()">Retake Quiz</button>
+    </div>
+  `;
+
+  // Animate score ring
+  setTimeout(() => {
+    document.getElementById('scoreCircle').style.strokeDashoffset = offset;
+  }, 100);
+}
+
+function restartQuiz() {
+  currentQ = 0;
+  score = 0;
+  answers = [];
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  showQuestion();
+}
+</script>
+</body>
+</html>
