@@ -830,7 +830,15 @@ let currentQ = 0;
 let score = 0;
 let answers = [];
 
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
 function startQuiz() {
+  shuffleArray(questions);
   document.getElementById('landing').style.display = 'none';
   document.getElementById('quiz').style.display = 'block';
   showQuestion();
