@@ -392,6 +392,115 @@
     font-weight: 600;
   }
 
+  /* Wisdom Cards */
+  .wisdom-section { margin-top: 36px; }
+
+  .wisdom-heading {
+    text-align: center;
+    color: var(--accent);
+    font-size: 1em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .wisdom-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px 24px;
+    margin-bottom: 16px;
+    text-align: center;
+    animation: fadeIn 0.8s ease;
+  }
+
+  .wisdom-art {
+    max-width: 360px;
+    margin: 0 auto 16px;
+  }
+
+  .wisdom-svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .wisdom-text {
+    font-size: 1.1em;
+    font-weight: 500;
+    line-height: 1.65;
+    color: #f0f0f0;
+    margin-bottom: 8px;
+  }
+
+  .wisdom-sub {
+    font-size: 0.85em;
+    color: var(--text-dim);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* Wisdom SVG animations */
+  .sine-path {
+    stroke-dasharray: 800;
+    stroke-dashoffset: 800;
+    animation: drawSine 3s ease forwards;
+  }
+  .eq-line {
+    animation: fadeIn 2s ease 1s both;
+  }
+  .pulse-dot {
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .flame-breathe {
+    animation: breathe 3s ease-in-out infinite;
+  }
+  .flame-inner {
+    animation: flicker 2s ease-in-out infinite alternate;
+  }
+  .flame-mid {
+    animation: flicker 2.5s ease-in-out infinite alternate-reverse;
+  }
+  .kashay-fade {
+    animation: driftOut 4s ease-in-out infinite alternate;
+  }
+  .awareness-ring.r1 { animation: ringPulse 4s ease-in-out infinite; }
+  .awareness-ring.r2 { animation: ringPulse 4s ease-in-out 0.5s infinite; }
+  .awareness-ring.r3 { animation: ringPulse 4s ease-in-out 1s infinite; }
+  .karma-fall.f1 { animation: fall 2s linear infinite; }
+  .karma-fall.f2 { animation: fall 2s linear 0.5s infinite; }
+  .karma-fall.f3 { animation: fall 2s linear 1s infinite; }
+  .karma-fall.f4 { animation: fall 2s linear 1.5s infinite; }
+
+  @keyframes drawSine {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes pulse {
+    0%, 100% { r: 5; opacity: 1; }
+    50% { r: 8; opacity: 0.7; }
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.08); }
+  }
+  @keyframes flicker {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+  }
+  @keyframes driftOut {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.12; }
+    100% { opacity: 0.3; }
+  }
+  @keyframes ringPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+  @keyframes fall {
+    0% { transform: translateY(0); opacity: 0.8; }
+    100% { transform: translateY(40px); opacity: 0; }
+  }
+
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -412,7 +521,7 @@
     <p class="subtitle">Terapanth Perspective</p>
     <p class="tagline">"What you think is dharm... might not be."</p>
     <p class="desc">
-      15 scenario-based questions that challenge everyday assumptions about punya, paap, dharm, and ahinsa. Each answer comes with a philosophical explanation rooted in Acharya Tulsi and Acharya Mahapragya's teachings.
+      19 questions designed to break your pattern-matching. Some answers are "Yes." Some have four "No" options with different reasoning. Some require choosing the MOST correct answer among partially-correct ones. Rooted in Acharya Bhikshu, Acharya Tulsi, and Acharya Mahapragya's teachings.
     </p>
     <button class="btn-start" onclick="startQuiz()">Begin the Quiz</button>
   </div>
@@ -431,200 +540,289 @@
 
 <script>
 const questions = [
+  // --- Q1: Answer IS "Yes" --- breaks the "always say no" pattern
   {
-    scenario: "Daily Life",
-    question: "You help an elderly person cross a busy road. Did you earn Punya (merit)?",
+    scenario: "Meditation",
+    question: "A person sits in complete silence, observes their breath, and watches angry thoughts arise and pass without acting on them. Is this Dharm?",
     options: [
-      "Yes, helping others always earns Punya",
-      "Yes, but only if done without expectation",
-      "No \u2014 Punya is not earned through actions, it is a by-product of Nirjara",
-      "It depends on the person you helped"
+      "No \u2014 merely sitting is inaction, not dharm. You must actively do something spiritual.",
+      "No \u2014 dharm requires austerity and tapasya, not passive observation",
+      "Yes \u2014 this is Samvar. By not reacting to kashayas, you are stopping the influx of new karma. This IS the core mechanism of dharm.",
+      "Only if done in a formal religious setting with a guru"
     ],
     correct: 2,
-    explanation: "In Jain darshan, Punya is NOT the goal \u2014 it is a by-product. The real goal is <strong>Nirjara</strong> (shedding of karma). When you perform <strong>niravadya pravritti</strong> (activity free from paap/himsa), nirjara occurs naturally, and punya may arise as a side-effect. Seeking punya as a goal is itself a form of attachment (raag).",
-    sanskrit: "\u201cPunya-paap dono bandhan hain, moksha in dono se mukti hai.\u201d"
+    explanation: "<strong>Samvar</strong> (stopping the influx of karma) is one of the two pillars of dharm (alongside Nirjara). When you observe anger arise and choose not to act on it, you are practicing <strong>samyam</strong> (self-restraint), which directly produces samvar. No ritual, no temple, no external act needed. This is <strong>the most authentic form of dharm</strong> \u2014 and it looks like \u201cdoing nothing.\u201d",
+    sanskrit: "\u201cSamvar hi dharm hai \u2014 karma ka pravah rokna hi sadhna hai.\u201d"
   },
+
+  // --- Q2: Multiple "No" options with different reasoning, only one correct ---
   {
     scenario: "Temple Worship",
-    question: "In a Jain temple, someone offers fresh flowers, lights a ghee diya, and burns incense. Is this considered Dharm according to Terapanth?",
+    question: "In a Jain temple, someone offers fresh flowers, lights a ghee diya, and burns incense. Is this Dharm according to Terapanth?",
     options: [
-      "Yes, it is devotion and therefore Dharm",
-      "Yes, but only if done with pure intention",
-      "No \u2014 it involves himsa of ekendriya jeev (one-sensed organisms) and cannot be Dharm",
-      "It's optional but still meritorious"
+      "No \u2014 because Tirthankaras are vitaraag and cannot receive or appreciate offerings",
+      "No \u2014 because idol worship itself is mithyatva (false belief) regardless of materials used",
+      "No \u2014 because it involves himsa of ekendriya jeev (flowers = vanaspati-kaay, fire = agni-kaay). Any act involving himsa cannot be dharm.",
+      "Yes \u2014 as long as the bhav (inner feeling) is pure, the materials don't matter"
     ],
     correct: 2,
-    explanation: "Terapanth holds that <strong>Ahinsa Paramo Dharmah</strong> is absolute. Plucking flowers kills plant life (ekendriya jeev). Lighting diyas/incense burns organisms in fire (agni-kaay jeev). Since dharm cannot involve any form of himsa, these rituals \u2014 however devotional they feel \u2014 are not dharm. Terapanth practices <strong>nirgun upasana</strong> (worship without material offerings).",
-    sanskrit: "\u201cAhinsa paramo dharmah \u2014 this is not a slogan, it is the test of every action.\u201d"
+    explanation: "All three \u201cNo\u201d options sound philosophical, but the reason matters. Option A is true but incomplete \u2014 the real problem isn't the Tirthankara's indifference. Option B overreaches \u2014 Terapanth doesn't categorically reject contemplation of Tirthankara qualities, only material worship. The core objection is <strong>Option C: himsa</strong>. Plucking flowers destroys vanaspati-kaay jeev. Fire kills agni-kaay jeev. Since <strong>Ahinsa Paramo Dharmah</strong> is absolute, any himsa-involving ritual fails the test of dharm, regardless of intent.",
+    sanskrit: "\u201cAhinsa paramo dharmah \u2014 yeh nara nahi, kasauti hai.\u201d"
   },
+
+  // --- Q3: Answer IS "Yes" --- counter-intuitive because it sounds selfish
   {
-    scenario: "Charity",
-    question: "A wealthy Jain family donates crores to build a hospital. Is this Dharm?",
+    scenario: "Priority",
+    question: "A Jain scholar says: \u201cYour own soul's purification matters more than feeding a thousand hungry people.\u201d Is this consistent with Jain philosophy?",
     options: [
-      "Absolutely \u2014 saving lives is the highest Dharm",
-      "Yes, daan (charity) is one of the pillars of Jain Dharm",
-      "No \u2014 Daan is a social virtue, not Dharm. Dharm is only that which leads to Nirjara/Moksha",
-      "Only if the hospital is vegetarian"
+      "No \u2014 this is selfish. Compassion for others must come first.",
+      "No \u2014 Jainism teaches universal love, which means serving all beings equally",
+      "Yes \u2014 Jainism is fundamentally focused on aatma-kalyan (self-liberation). Feeding the hungry is vyavahar (social good), not nishchay dharm (absolute dharm).",
+      "No \u2014 a true Jain balances self-purification and social service equally"
     ],
     correct: 2,
-    explanation: "Terapanth makes a sharp distinction: <strong>Dharm = only that which leads to moksha</strong> (samvar + nirjara). Charity, social service, and philanthropy are <strong>vyavahar</strong> (worldly/social virtues) \u2014 good, commendable, but not dharm in the technical Jain sense. Confusing social good with dharm dilutes the pursuit of moksha. Acharya Bhikshu emphasized this distinction strongly.",
-    sanskrit: "\u201cDharm vahi hai jo aatma ko moksha ki or le jaye. Baaki sab vyavahar hai.\u201d"
+    explanation: "This sounds harsh, but Jain darshan is clear: <strong>the soul's journey to moksha is the ONLY dharm</strong>. Social service, charity, feeding the hungry \u2014 these are <strong>vyavaharik</strong> (conventional/worldly) virtues. They are commendable but not dharm in the <strong>nishchay</strong> (absolute) sense. Acharya Bhikshu was criticized heavily for this stance, but it is logically consistent: if dharm = moksha-marg, then only what advances YOUR soul on that path qualifies. You cannot achieve moksha for someone else.",
+    sanskrit: "\u201cApni aatma ka uddhar, apne haath \u2014 yahi Jain darshan ka saar hai.\u201d"
   },
+
+  // --- Q4: Nuanced "Yes, but..." answer ---
   {
     scenario: "Food Choices",
-    question: "You strictly avoid onion, garlic, and root vegetables. A friend asks: \u201cIsn\u2019t avoiding root vegetables just a cultural habit?\u201d What is the Jain philosophical reason?",
+    question: "Your non-Jain friend asks: \u201cYou eat tomatoes and cucumbers but not potatoes. All are plants. What's the difference?\u201d What is the most precise Jain answer?",
     options: [
-      "They are tamasic foods that cloud the mind",
-      "Uprooting them kills the entire plant \u2014 it is himsa of vanaspati-kaay (plant-bodied) jeev, and they house anant-kaay (infinite organisms)",
-      "It's purely a tradition with no philosophical basis",
-      "They cause digestive problems during meditation"
+      "Fruits and above-ground vegetables have fewer jeev than root vegetables, which are anant-kaay (housing infinite organisms in one body)",
+      "Root vegetables are tamasic (heavy, dull) while fruits are satvik (light, pure)",
+      "There is no real difference \u2014 all plant eating involves equal himsa, but we follow tradition",
+      "Root vegetables regrow if left alone, so uprooting them destroys future life potential"
     ],
-    correct: 1,
-    explanation: "Root vegetables are <strong>anant-kaay</strong> \u2014 they contain infinite (anant) organisms in a single body. Uprooting a potato or onion destroys not one but potentially infinite jeevas. This is a much higher degree of himsa than eating above-ground vegetables. It's not cultural \u2014 it's rooted in the Jain understanding of <strong>jeev-vichar</strong> (consciousness classification).",
+    correct: 0,
+    explanation: "The distinction is precise: root vegetables like potato, onion, and garlic are classified as <strong>anant-kaay</strong> \u2014 a single body housing infinite (anant) jeevas. Eating one potato destroys not one but potentially infinite organisms. Fruits and above-ground vegetables, once naturally ripened, are <strong>sachitt-to-achitt</strong> (transitioning from living to non-living) and contain far fewer jeev. It's not cultural or Ayurvedic \u2014 it's rooted in <strong>jeev-vichar</strong> (Jain biology of consciousness).",
     sanskrit: "\u201cAnant-kaay mein anant jeev \u2014 ek kand mein anek praan.\u201d"
   },
+
+  // --- Q5: Two options argue "No" with sophisticated reasoning, answer is actually "Partially" ---
   {
     scenario: "Paryushan",
-    question: "During Paryushan, you fast for 8 days and feel immense pride: \u201cNo one else in my family could do this!\u201d Has your fasting achieved its spiritual purpose?",
+    question: "During Paryushan, you fast for 8 days with genuine discipline and humility. But you still feel irritation when your family makes noise during your meditation. What is the karmic outcome?",
     options: [
-      "Yes \u2014 the physical tapasya itself purifies karma",
-      "Partially \u2014 the fasting helped, but the pride reduced its effect",
-      "No \u2014 Maan (ego/pride) is a kashaya. Your fasting fueled karma bondage, not nirjara",
-      "Yes, as long as you did Pratikraman afterwards"
+      "Net positive \u2014 the fasting generates massive nirjara that outweighs minor irritation",
+      "Net negative \u2014 any kashaya during tap completely nullifies the entire fast",
+      "Mixed \u2014 the fasting produces nirjara for the karma it sheds, but the irritation (krodh kashaya) simultaneously binds NEW karma. Both happen independently.",
+      "Neutral \u2014 internal feelings don't affect karma, only external actions do"
     ],
     correct: 2,
-    explanation: "The four <strong>kashayas</strong> (passions) \u2014 Krodh (anger), Maan (pride), Maya (deceit), Lobh (greed) \u2014 are the primary causes of karma bondage. If your tapasya produces pride, you are <strong>binding new karma even while trying to shed old karma</strong>. True tapasya requires complete bhav-shuddhi (purity of internal state). The external act without internal purity is hollow.",
-    sanskrit: "\u201cMaan kashaya se nikla tap, tap nahi \u2014 bandhan hai.\u201d"
+    explanation: "Karma operates <strong>independently and simultaneously</strong>. Your genuine tapasya DOES produce nirjara (shedding). But your krodh (anger/irritation) ALSO binds new karma at the same time. <strong>They don't cancel out like an accounting ledger.</strong> Option A is wrong because it assumes netting. Option B is wrong because it assumes total nullification. The reality is both processes run in parallel. This is why bhav-shuddhi (purity of internal state) during tapasya matters so much \u2014 not to \u201cprotect\u201d the fast, but to avoid simultaneous bondage.",
+    sanskrit: "\u201cNirjara aur bandh \u2014 ek hi kshan mein dono sambhav hain.\u201d"
   },
+
+  // --- Q6: Classic misconception but with a hard distractor ---
   {
     scenario: "Moral Dilemma",
-    question: "You see a goat about to be slaughtered. You buy it from the butcher to save its life. Have you performed Dharm?",
+    question: "You see a goat about to be slaughtered. You buy it from the butcher to save its life. From a strict Terapanth perspective:",
     options: [
-      "Yes \u2014 you saved a life, which is the highest ahinsa",
-      "Yes, this is daya-dharm (compassion-dharma)",
-      "No \u2014 this is daya (compassion), a social virtue. Dharm is strictly nirjara-oriented. Also, the money may fund the butcher to buy more animals.",
-      "Only if you also became vegetarian yourself"
+      "This is arihant-tulya karma \u2014 saving a panch-indriya jeev is among the highest acts",
+      "This is daya (compassion), a noble social virtue, but NOT dharm. Dharm is strictly nirjara-oriented. Additionally, your money funds the butcher to buy more animals.",
+      "This IS dharm because ahimsa means preventing himsa wherever possible, and you prevented the killing",
+      "This is dharm because your bhav (intent) was to reduce suffering, and bhav determines karma"
     ],
-    correct: 2,
-    explanation: "This is a famous Terapanth position that drew controversy. Acharya Bhikshu argued: <strong>Daya (compassion) is not dharm</strong>. It is a noble social instinct, but dharm in its precise meaning is only self-purification leading to moksha. Moreover, purchasing the goat gives the butcher capital to acquire more animals \u2014 the net himsa may not reduce. This challenges us to think beyond emotional reactions.",
+    correct: 1,
+    explanation: "Options C and D are clever traps. Option C confuses <strong>social ahinsa with moksha-marg</strong> \u2014 preventing external violence is vyavahar, not nishchay dharm. Option D invokes bhav (intent) correctly as a karma principle, but misapplies it: good bhav reduces the INTENSITY of karma bound, it doesn't transform a worldly act into dharm. Acharya Bhikshu's famous position: <strong>Daya is not dharm</strong>. Also practically: your purchase gives the butcher capital to buy more goats \u2014 the net himsa in the system may not reduce.",
     sanskrit: "\u201cDaya dharm ka mool hai \u2014 yeh kahavat hai, siddhant nahi.\u201d"
   },
+
+  // --- Q7: Answer IS "Yes" again --- breaks pattern
   {
     scenario: "Daily Routine",
-    question: "You do Pratikraman every evening, reciting all the sutras perfectly from memory. But during the day, you spoke harshly to your employee and lied to a client. Is your Pratikraman effective?",
+    question: "A Jain muni walks barefoot, sweeps the path before stepping, and drinks only filtered water. A student says: \u201cThis is excessive ritualism.\u201d Is the student right?",
     options: [
-      "Yes \u2014 Pratikraman specifically exists to wash away the day's sins",
-      "Partially \u2014 it reduces karma but doesn't eliminate it",
-      "No \u2014 Pratikraman without genuine pratigya (resolve to not repeat) is just ritual. Mechanical recitation without bhav is not praayashchit.",
-      "Yes, if you add extra Pratikraman for the specific sins"
+      "Yes \u2014 these are outdated practices from a pre-scientific era",
+      "Yes \u2014 internal purity matters more than external rituals",
+      "No \u2014 these are not rituals. Each practice directly prevents himsa of specific jeev categories (prithvi-kaay, jal-kaay, vayu-kaay). They are ahinsa in action, not performance.",
+      "No \u2014 these practices build samyam (self-discipline), their purpose is training the mind, not protecting organisms"
     ],
     correct: 2,
-    explanation: "Pratikraman literally means <strong>\u201cgoing back\u201d (prati = back, kraman = steps)</strong> \u2014 returning from wrongful conduct. It requires three elements: <strong>recognition</strong> (I did wrong), <strong>remorse</strong> (genuine regret), and <strong>resolve</strong> (I will not repeat). Without all three \u2014 especially the resolve \u2014 it's mere recitation, not spiritual practice. Many treat it as an automatic reset button, which defeats its purpose.",
-    sanskrit: "\u201cJo jaane apne dosh ko, so hi hai praayashchit.\u201d"
+    explanation: "Both \u201cNo\u201d options reject the student, but for very different reasons. Option D sounds sophisticated (\u201cit's about mental training\u201d) but misses the point. These practices <strong>literally, directly prevent himsa</strong>: sweeping protects prithvi-kaay (earth-bodied) and trasa (mobile) jeev from being crushed; filtering water prevents consuming jal-kaay jeev; walking barefoot increases awareness of trasa jeev underfoot. <strong>The protection of jeev IS the point, not a metaphor for self-discipline.</strong> This is ahinsa in its most concrete, lived form.",
+    sanskrit: "\u201cJeev daya hi dharm hai \u2014 yeh acharan kriya nahi, ahinsa ka seedha prayog hai.\u201d"
   },
+
+  // --- Q8: All 4 options say "No" with different philosophical reasoning ---
   {
     scenario: "Social Pressure",
-    question: "At a community gathering, elders say: \u201cBeing a good Jain means donating to build more mandirs.\u201d From a Terapanth perspective, is mandir-nirman (temple construction) Dharm?",
+    question: "A wealthy family builds a grand Jain mandir with Italian marble and gold-plated murtis, saying \u201cThis is our greatest dharm.\u201d From a Terapanth perspective, what is the PRIMARY objection?",
     options: [
-      "Yes \u2014 mandirs inspire devotion in the community",
-      "Yes, it earns punya for the donor and benefits everyone",
-      "No \u2014 Terapanth does not believe in idol worship or temple construction. Dharm is internal, not in stone structures.",
-      "Only if the mandir follows satvik construction practices"
+      "Parigraha \u2014 the lavish spending reflects attachment to wealth and status, which is lobh kashaya",
+      "Murti-puja itself \u2014 Terapanth holds that idol worship is not part of the moksha-marg, regardless of cost",
+      "Maan kashaya \u2014 the \u201cgreatest dharm\u201d claim reveals pride, which binds karma",
+      "Himsa \u2014 the construction process involved violence to earth, water, and air-bodied jeev"
     ],
-    correct: 2,
-    explanation: "Terapanth is <strong>nir-granthi</strong> (non-attached to material religion). It does not practice murti-puja (idol worship) or build temples. The reasoning: <strong>the soul's path to moksha is internal</strong>. Constructing elaborate external structures can become another form of parigraha (attachment/possession) and maan (pride). Acharya Bhikshu emphasized direct sadhana over institutional religion.",
+    correct: 1,
+    explanation: "All four objections have philosophical validity, but the PRIMARY Terapanth objection is <strong>fundamental, not circumstantial</strong>. Options A (parigraha), C (maan), and D (himsa) are situational \u2014 they apply because THIS family was lavish and proud. But even a humble, simple temple built with minimal himsa would STILL not be dharm per Terapanth, because <strong>Terapanth rejects murti-puja altogether</strong>. The issue isn't HOW the temple was built, but THAT it was built. Dharm is internal sadhana, not external structures.",
     sanskrit: "\u201cMandir mann mein hai, pathar mein nahi.\u201d"
   },
+
+  // --- Q9: Trick question where the "tough" answer is wrong ---
+  {
+    scenario: "Anekantavad",
+    question: "Two friends debate: \u201cIs God the creator of the universe?\u201d Friend A says Yes, Friend B says No. A Jain student says: \u201cBoth are right from their own perspective \u2014 that's Anekantavad.\u201d Is the student's application correct?",
+    options: [
+      "Yes \u2014 Anekantavad means every viewpoint has some truth",
+      "Yes \u2014 Jainism respects all religions equally through Anekantavad",
+      "No \u2014 Anekantavad is about the multi-faceted nature of REALITY (vastu), not about validating all opinions. Jainism clearly holds that no God created the universe.",
+      "No \u2014 Anekantavad only applies to material objects, not philosophical questions"
+    ],
+    correct: 2,
+    explanation: "This is one of the most commonly weaponized Jain concepts. Anekantavad does NOT mean \u201call opinions are valid.\u201d It means <strong>reality (vastu) has infinite properties (anant dharm)</strong> and can be examined from multiple valid angles (naya). But \u201cvalid angle\u201d doesn't mean \u201cany opinion.\u201d Jainism explicitly states the universe is <strong>anaadi-anant</strong> (beginningless and endless), not created by a God. Saying \u201cboth are right\u201d here isn't Anekantavad \u2014 it's <strong>Syadvad ka durupyog</strong> (misuse of conditional logic).",
+    sanskrit: "\u201cAnekant vastu-dharm hai, mat-bhinn nahi.\u201d"
+  },
+
+  // --- Q10: Answer is "Yes" with a precise reason, traps with philosophical-sounding "No" ---
   {
     scenario: "Thought Experiment",
-    question: "You have NEVER physically harmed any living being in your life. But you frequently feel intense jealousy and anger towards others. Are you practicing Ahinsa?",
+    question: "A person accidentally steps on an ant while walking mindfully on a clean path. They feel genuine remorse. Has paap (sin) karma been bound?",
     options: [
-      "Yes \u2014 ahinsa means non-violence in action",
-      "Mostly \u2014 you're practicing physical ahinsa which is the most important",
-      "No \u2014 Jainism recognizes himsa of mann (mind), vachan (speech), and kaay (body). Mental violence is still himsa.",
-      "Partially \u2014 you're halfway there"
+      "Yes \u2014 himsa occurred, so paap is bound regardless of intent",
+      "No \u2014 there was no sankalp (intention), and karma is bound only through intention",
+      "No \u2014 pramaad (carelessness) was absent, so no paap accrues",
+      "Yes, but of a much lighter intensity \u2014 because bhav (mental state) was not of himsa, the karma bound is in a milder prakriti and shorter sthiti"
     ],
-    correct: 2,
-    explanation: "Jain ahinsa operates at <strong>three levels: mann (thought), vachan (speech), kaay (body)</strong> \u2014 AND in <strong>three modes: krit (doing), karit (getting done), anumodana (approving)</strong>. That's 3\u00d73 = 9 forms of himsa. Feeling anger IS himsa of the mind. Even silently approving someone else's violence is himsa through anumodana. True ahinsa is extraordinarily comprehensive.",
-    sanskrit: "\u201cMann, vachan, kaaya \u2014 teen yog. Krit, karit, anumodana \u2014 teen kaaran. Nav prakaar ki himsa tyaagni hai.\u201d"
+    correct: 3,
+    explanation: "This requires understanding Jain karma theory precisely. Karma IS bound whenever himsa occurs \u2014 even accidentally (<strong>dravya-himsa</strong>). However, the <strong>intensity, duration (sthiti), and type (prakriti)</strong> of karma bound depends on the <strong>bhav (mental state)</strong>. Accidental killing without malice binds karma of <strong>much lighter intensity</strong> than deliberate killing. Option B is a common misconception \u2014 it conflates the Buddhist position (intent-only) with Jainism. In Jainism, <strong>both dravya (substance) and bhav (intent) matter</strong>, but bhav determines the severity.",
+    sanskrit: "\u201cDravya-himsa se bandh hota hai, bhav-himsa se bandh ki teevrata badhti hai.\u201d"
   },
-  {
-    scenario: "Water & Nature",
-    question: "You see water being wasted from an open tap. Why would a Jain be specifically concerned beyond just \u201csaving the environment\u201d?",
-    options: [
-      "Water is expensive and shouldn't be wasted",
-      "Wasting water is against Aparigraha (non-possessiveness)",
-      "Water contains Jal-kaay jeev (water-bodied organisms). Wasting water = unnecessary himsa of countless water-bodied souls.",
-      "It shows carelessness, which is against Jain discipline"
-    ],
-    correct: 2,
-    explanation: "In Jain cosmology, water is not just H\u2082O \u2014 it contains <strong>jal-kaay jeev</strong> (water-bodied, one-sensed living beings). Every drop of water unnecessarily wasted means unnecessary destruction of these jeev. This is why Jain munis are extremely careful with water usage \u2014 not for environmental reasons, but because it is <strong>sthool himsa</strong> (gross violence). The environmental benefit is a side-effect, not the motivation.",
-    sanskrit: "\u201cJal mein jeev, agni mein jeev, vayu mein jeev \u2014 sab mein praan.\u201d"
-  },
-  {
-    scenario: "Business Ethics",
-    question: "A Jain businessman earns honestly, pays fair wages, and never cheats. But he deals in leather goods. From a Jain perspective, what's the issue?",
-    options: [
-      "No issue \u2014 he's honest and fair",
-      "Minor issue \u2014 it's not ideal but his honesty compensates",
-      "Serious issue \u2014 trading in leather involves anumodana (endorsement) of himsa. Honesty in paap-pravritti doesn't make it dharm.",
-      "Only an issue if he's personally involved in manufacturing"
-    ],
-    correct: 2,
-    explanation: "Jainism lists <strong>15 types of trades (karma-adaan)</strong> a shravak should avoid, including those involving animal products. Even if you don't personally kill the animal, <strong>dealing in leather is karit-himsa (getting himsa done through others) and anumodana-himsa (endorsing the chain of violence)</strong>. Being honest within a harmful trade doesn't transform the trade into dharma. The business itself needs to be niravadya (violence-free).",
-    sanskrit: "\u201cSatya aur ahinsa mein ahinsa uchchtam hai \u2014 satya bhi ahinsa ke adheen hai.\u201d"
-  },
-  {
-    scenario: "Modern Debate",
-    question: "Someone says: \u201cJainism is just about non-violence and vegetarianism.\u201d What is the most accurate correction?",
-    options: [
-      "It's also about meditation and inner peace",
-      "It's also about fasting and rituals",
-      "Jainism is fundamentally about the soul's journey to moksha through Samvar (stopping new karma) and Nirjara (shedding existing karma). Ahinsa is the primary means, not the end goal.",
-      "It's also about community service and charity"
-    ],
-    correct: 2,
-    explanation: "Reducing Jainism to non-violence and vegetarianism is like reducing physics to \u201cthings fall down.\u201d The core framework is: <strong>Aasrav</strong> (influx of karma) \u2192 <strong>Bandh</strong> (bondage) \u2192 <strong>Samvar</strong> (stopping influx) \u2192 <strong>Nirjara</strong> (shedding) \u2192 <strong>Moksha</strong> (liberation). Ahinsa, satya, achaurya, brahmacharya, and aparigraha are MEANS to achieve samvar. They are critical tools, not the destination.",
-    sanskrit: "\u201cSamvar aur nirjara \u2014 yahi dharm ka saar hai.\u201d"
-  },
+
+  // --- Q11: Answer is the moderate option, not the extreme ---
   {
     scenario: "Relationships",
-    question: "You feel deep attachment and love for your family. A Jain perspective would say:",
+    question: "You feel deep love for your child. An elder tells you: \u201cA true Jain would feel no attachment.\u201d What is the most philosophically accurate response?",
     options: [
-      "Family love is beautiful and should be nurtured",
-      "Love is fine as long as you also love all beings equally",
-      "Moha (attachment) \u2014 even towards family \u2014 is a form of raag (attraction), which causes karma bondage. Love without attachment is the ideal.",
-      "Family comes first, spirituality comes second"
+      "The elder is right \u2014 all attachment is moha (delusion) and must be eliminated immediately",
+      "The elder is wrong \u2014 Jainism celebrates love as long as it's selfless",
+      "The elder confuses the shravak path with the muni path. A shravak practices anu-vrat: gradual reduction of moha, not immediate elimination. Caring for your child with awareness of attachment is the householder's practice.",
+      "The elder is right in principle, but this applies only after taking diksha (monkhood)"
     ],
     correct: 2,
-    explanation: "This is perhaps the hardest Jain teaching to internalize. <strong>Raag (attraction) and Dvesh (aversion) are the two fundamental causes of karma bondage.</strong> Family attachment is raag. This doesn't mean you should be cold or uncaring \u2014 rather, you should practice <strong>vitaraagta</strong> (equanimity without attachment). Care for family out of duty and compassion, not out of possessive attachment. Mahavir left his family not out of indifference, but to transcend moha.",
-    sanskrit: "\u201cRaag-dvesh se karma bandh, vitaraagta se moksha.\u201d"
-  },
-  {
-    scenario: "Self-Defense",
-    question: "A Jain is being physically attacked. Can they fight back in self-defense?",
-    options: [
-      "Yes \u2014 self-defense is a natural right",
-      "Yes, but only proportional force",
-      "For a shravak (householder), limited self-defense is permitted with minimal force. For a muni (monk), even self-defense involves himsa and must be avoided \u2014 they must endure.",
-      "No Jain should ever fight under any circumstance"
-    ],
-    correct: 2,
-    explanation: "Jainism has <strong>different standards for shravak (layperson) and muni (monk)</strong>. A shravak follows <strong>anu-vrat</strong> (small vows) \u2014 partial non-violence, allowing for self-preservation. A muni follows <strong>maha-vrat</strong> (great vows) \u2014 absolute non-violence, even at the cost of their own life. This graduated path acknowledges that complete renunciation requires extraordinary spiritual preparation. Neither position is \u201canything goes.\u201d",
+    explanation: "Jainism has a <strong>graduated path</strong>. The elder's statement applies to someone on the muni-marg (monastic path). For a shravak, the expectation is <strong>anu-vrat</strong> \u2014 partial, progressive vows. A householder practices <strong>awareness of attachment</strong>, not its total absence. You can love your child while recognizing: \u201cthis love has raag in it, and I should not let it control my actions or cloud my spiritual judgment.\u201d Option D is close but incorrectly implies the teaching is irrelevant to householders \u2014 it IS relevant, just applied differently.",
     sanskrit: "\u201cShravak ke anu-vrat, muni ke maha-vrat \u2014 marg ek, sthiti bhinn.\u201d"
   },
+
+  // --- Q12: Genuine philosophical puzzle, two strong distractors ---
+  {
+    scenario: "Karma Theory",
+    question: "If both Punya (merit) AND Paap (sin) are forms of karma bondage, and moksha requires freedom from BOTH \u2014 then why do Jain texts still encourage shubh (virtuous) activities?",
+    options: [
+      "Because shubh karma leads to better rebirth, buying more time to achieve moksha eventually",
+      "Because shubh karma is a stepping stone: it weakens ashubh karma's grip, making nirjara easier. You use golden chains to break iron chains, then discard both.",
+      "They don't \u2014 Jain texts only encourage nirjara and samvar, never shubh karma",
+      "Because shubh karma transforms into nirjara automatically once you reach a certain spiritual stage"
+    ],
+    correct: 1,
+    explanation: "This is one of Jainism's most elegant logical constructs. Yes, punya IS bondage. But <strong>the practical path requires a sequence</strong>: first replace ashubh (inauspicious) karma with shubh (auspicious) karma, then transcend shubh karma itself through veetaraagta. The classic analogy: <strong>use a golden chain to break iron chains, then discard the golden chain too</strong>. Option A sounds reasonable but treats moksha as postponable \u2014 it doesn't explain WHY shubh karma helps. Option C is factually wrong \u2014 texts do encourage satpravritti. Option D fabricates a mechanism that doesn't exist in Jain karma theory.",
+    sanskrit: "\u201cSone ki hathkadi se lohe ki hathkadi todo \u2014 phir dono tyaago.\u201d"
+  },
+
+  // --- Q13: Multiple options sound "deeply philosophical," only one is technically correct ---
+  {
+    scenario: "Business Ethics",
+    question: "A Jain woman runs a software company. She earns honestly, pays fair wages, and donates 20% to education. One day, a client asks her to build a betting/gambling app. She refuses. Which Jain principle is MOST directly at play?",
+    options: [
+      "Aparigraha \u2014 gambling promotes greed, which violates non-possessiveness",
+      "Satya \u2014 gambling is built on deception and false promises of wealth",
+      "Ahinsa \u2014 gambling causes psychological harm and destroys families",
+      "Avoiding paap-pravritti \u2014 one of the shravak anu-vrats is to avoid occupations that promote sin (arambhi-himsa in livelihood)"
+    ],
+    correct: 3,
+    explanation: "All options name real Jain principles, but the <strong>most direct and specific</strong> one is Option D. The shravak anu-vrats include specific guidance on <strong>livelihood (jeevika)</strong>: avoid trades that propagate paap. Building a gambling platform is <strong>karit paap-pravritti</strong> \u2014 enabling sinful activity through others. Options A, B, and C identify downstream effects (greed, deception, harm) but Option D addresses the <strong>structural Jain framework for ethical livelihood</strong> that makes the refusal a spiritual duty, not just a moral preference.",
+    sanskrit: "\u201cJeevika mein bhi dharma ka palan \u2014 yahi shravak ka anu-vrat hai.\u201d"
+  },
+
+  // --- Q14: Answer requires distinguishing between two very similar concepts ---
   {
     scenario: "Death & Dying",
-    question: "An elderly Jain monk voluntarily gives up food and water, eventually passing away. Is this suicide?",
+    question: "What is the FUNDAMENTAL difference between suicide and Santhara (Sallekhana)?",
     options: [
-      "Yes \u2014 any voluntary death is suicide",
-      "It's a grey area \u2014 technically self-harm",
-      "No \u2014 Santhara/Sallekhana is a conscious, passionless withdrawal from the body when death is imminent. It is performed without kashaya (passion) or fear \u2014 the opposite of suicide.",
-      "Only acceptable for monks, not for laypeople"
+      "Suicide is impulsive; Santhara is planned and systematic",
+      "Suicide is done alone; Santhara is done under an Acharya's guidance",
+      "Suicide is driven by kashaya (dvesh/despair \u2014 aversion to life); Santhara is driven by vitaraagta (equanimity \u2014 absence of both raag and dvesh toward body and life)",
+      "Suicide involves physical violence to the body; Santhara is a peaceful, natural process"
     ],
     correct: 2,
-    explanation: "<strong>Santhara (Sallekhana)</strong> is fundamentally different from suicide. Suicide is driven by <strong>dvesh</strong> (aversion to life, despair, anger). Santhara is driven by <strong>vitaraagta</strong> (equanimity, spiritual readiness). It is undertaken when the body can no longer sustain spiritual practice, under guidance of an Acharya, with complete mental clarity and absence of kashayas. It is the <strong>ultimate expression of non-attachment to the body</strong> \u2014 meeting death with awareness rather than being overtaken by it.",
-    sanskrit: "\u201cDeh ka tyaag raag-dvesh rahit ho \u2014 yahi santhara hai.\u201d"
+    explanation: "All four distinctions are factually true, but only one captures the <strong>fundamental philosophical difference</strong>. Options A (planning), B (guidance), and D (method) describe <strong>procedural</strong> differences \u2014 how it's done. But the CORE distinction is about <strong>internal state</strong>. Suicide is born from <strong>dvesh</strong> (aversion, despair, running away from pain). Santhara is born from <strong>vitaraagta</strong> (complete equanimity \u2014 no clinging to life, no aversion to death). A planned, guided, peaceful death STILL counts as suicide if driven by dvesh. The bhav makes the difference.",
+    sanskrit: "\u201cDeh ka tyaag raag-dvesh rahit ho \u2014 yahi santhara hai. Dvesh sahit ho \u2014 yahi aatma-hatya hai.\u201d"
+  },
+
+  // --- Q15: Historical — Bhamashah funding war ---
+  {
+    scenario: "History \u2014 Bhamashah",
+    question: "Bhamashah, a Jain minister, funded Maharana Pratap's entire war against the Mughals \u2014 directly enabling large-scale violence. Most people would say a Jain funding a war is clear adharm. What does a deeper Jain analysis reveal?",
+    options: [
+      "It was adharm \u2014 funding war is karit-himsa (getting violence done through others), period",
+      "It was dharm because he was protecting Hindu dharma and his motherland",
+      "The act itself involves arambhi-himsa (occupational violence), which a shravak accepts within anu-vrat. But the KEY factor is bhav: Bhamashah acted from kartavya (duty) without personal raag/dvesh \u2014 not from hatred of Mughals or greed for power.",
+      "It was a necessary evil \u2014 sometimes paap must be done for a greater good"
+    ],
+    correct: 2,
+    explanation: "This is where Jain ethics becomes sophisticated beyond simple rules. Option A applies a muni-level maha-vrat standard to a householder, which is incorrect \u2014 shravaks operate under <strong>anu-vrat</strong> which permits arambhi-himsa (occupational/duty-bound violence) within limits. Option B invokes non-Jain reasoning (protecting dharma/nation). Option D introduces \u201cgreater good\u201d utilitarianism which Jainism doesn\u2019t accept.<br><br>The Jain analysis centers on <strong>bhav (internal state)</strong>: Was Bhamashah driven by dvesh (hatred) toward the enemy or raag (ambition) for power? Or by a measured sense of kartavya (duty) with minimal kashaya? <strong>The same external act binds different karma based on the bhav behind it.</strong> A shravak performing his worldly duty with awareness and minimal kashaya is on the path \u2014 not fallen from it.",
+    sanskrit: "\u201cKarya ek, bhav bhinn \u2014 bandh bhi bhinn.\u201d"
+  },
+
+  // --- Q16: Historical — Warrior ethics (Chetak) ---
+  {
+    scenario: "History \u2014 Warrior Ethics",
+    question: "In Jain history, warrior kings like Chetak of Vaishali followed strict self-imposed rules on the battlefield \u2014 such as limiting arrows per day, never attacking the unarmed, and stopping combat at sunset. What does this tell us about the Jain view of a householder in warfare?",
+    options: [
+      "It proves war is acceptable in Jainism as long as you follow rules of fair combat",
+      "It shows that even within unavoidable himsa, a shravak practices samvar \u2014 consciously limiting the scope and intensity of violence. Every arrow NOT shot is an act of samyam (self-restraint).",
+      "These were cultural Kshatriya norms of the era, not specifically Jain practices",
+      "It demonstrates that Kshatriya dharma (warrior duty) overrides Jain dharma in times of war"
+    ],
+    correct: 1,
+    explanation: "This is a brilliant example of <strong>Jain ethics applied within imperfect real-world conditions</strong>. A householder king cannot always avoid war. But a Jain householder at war is STILL practicing samvar within those constraints. <strong>Each self-imposed limitation is an act of samyam</strong> that reduces karma bondage. Not shooting the extra arrow, sparing the unarmed, stopping at sunset \u2014 these are not mere chivalry. They are <strong>micro-practices of ahinsa within macro-himsa</strong>.<br><br>Option A overgeneralizes (war isn\u2019t \u201cacceptable,\u201d it\u2019s tolerated within anu-vrat). Option D wrongly suggests a non-Jain framework overrides Jain principles. The truth: <strong>Jain principles OPERATE WITHIN every situation, even war</strong>, through conscious limitation of himsa.",
+    sanskrit: "\u201cJahan himsa apariharya ho, wahan bhi samyam ka palan \u2014 yahi shravak-dharma hai.\u201d"
+  },
+
+  // --- Q17: Historical — Bharat Chakravarti ---
+  {
+    scenario: "History \u2014 Bharat Chakravarti",
+    question: "Bharat Chakravarti conquered the entire known world, became Chakravarti Samrat (emperor of six khand), ruled with immense power and wealth \u2014 and then renounced everything and attained Moksha IN THE SAME LIFETIME. What is the deepest teaching from his story?",
+    options: [
+      "Power and wealth must eventually be renounced \u2014 they are obstacles to moksha",
+      "Bharat was a special soul (tirthankar-gotriya) from birth, so his story is inspirational but doesn\u2019t apply to ordinary people",
+      "Laukik karya karte hue bhi anasakt rehna possible hai \u2014 it is possible to perform worldly duties at the highest level while remaining internally detached. Moksha doesn\u2019t require avoiding the world \u2014 it requires being unbound by it.",
+      "His conquests were dharm because he unified the world under righteous Jain rule"
+    ],
+    correct: 2,
+    explanation: "This is one of Jainism\u2019s most powerful teachings, and it directly counters two common misconceptions:<br><br><strong>Misconception 1:</strong> \u201cYou must leave the world to achieve moksha.\u201d Bharat didn\u2019t achieve moksha DESPITE his worldly life \u2014 his ability to renounce at the peak proves he was <strong>anasakt (unattached) even while ruling</strong>. The renunciation was the final confirmation of detachment that already existed internally.<br><br><strong>Misconception 2:</strong> \u201cSpiritual people should avoid worldly success.\u201d Bharat conquered the ENTIRE world. His spiritual greatness wasn\u2019t diminished by his worldly greatness. <strong>Vitaraagta (detachment) is an internal state, not an external condition.</strong><br><br>Option A reduces the story to \u201cwealth is bad\u201d \u2014 missing that the teaching is about performing duties WHILE unattached. Option B makes it an exception rather than a universal teaching. The real seekh: you can be a CEO, a king, a warrior \u2014 and still walk the moksha-marg, if your bhav is anasakt.",
+    sanskrit: "\u201cLaukik karya karte hue bhi anasakt rehna \u2014 yahi Bharat Chakravarti ki seekh hai.\u201d"
+  },
+
+  // --- Q18: Dharmshal food subsidies — logical trap question ---
+  {
+    scenario: "Dharmshal Dilemma",
+    question: "A wealthy Jain family subsidizes free meals at a dharmshal. People eating there use that energy to attend samayik, listen to pravachan, and do dharm-upasana. Does the family earn nirjara through this chain of cause-and-effect?",
+    options: [
+      "No \u2014 the act of cooking food is itself himsa (agni-kaay, vanaspati-kaay destruction), so anything rooted in himsa cannot lead to nirjara",
+      "No \u2014 only daan given directly to sanyami (mahavrat-dhaari) souls counts as spiritually meaningful. Feeding random people at a dharmshal has no specific spiritual value.",
+      "No \u2014 by the same logic, those people will ALSO eat, gain energy, and then indulge in pramaad and paap-pravritti afterwards. If you get credit for their dharm, you should also get a share of their paap. The chain-of-causation argument cuts both ways.",
+      "All of the above \u2014 each argument independently invalidates the claim"
+    ],
+    correct: 3,
+    explanation: "This question is a logical trap \u2014 and the answer is <strong>D: all three arguments are independently valid</strong>.<br><br><strong>Option A is correct:</strong> Cooking involves real himsa (fire kills agni-kaay jeev, cutting vegetables destroys vanaspati-kaay). An act rooted in himsa cannot directly produce nirjara.<br><br><strong>Option B is correct:</strong> In Jain tradition, aahaar-daan to mahavrat-dhaari munis has specific spiritual significance because they are nirgrantha (possessionless). Feeding general visitors at a dharmshal is vyavaharik (social good), not nishchay dharm.<br><br><strong>Option C is the killer insight:</strong> If you claim credit for downstream dharm done using your food\u2019s energy, then logically you must also accept blame for downstream paap done using that same energy. The person who eats your food and then lies, cheats, or harms \u2014 do you share that paap too? <strong>You cannot selectively claim only the positive downstream effects.</strong> This logical inconsistency exposes the fundamental flaw in chain-of-causation reasoning for nirjara.",
+    sanskrit: "\u201cNirjara apni sadhna se hoti hai \u2014 kisi aur ke madhyam se nahi.\u201d"
+  },
+
+  // --- Q19: Final boss \u2014 all options are partially correct, must find the MOST complete one ---
+  {
+    scenario: "The Big Question",
+    question: "A young person asks: \u201cWhat is the single most important thing in Jainism?\u201d What is the most complete answer?",
+    options: [
+      "Ahinsa (non-violence) \u2014 it is called Paramo Dharmah, the supreme dharm",
+      "Samyak Darshan (right perception) \u2014 without it, even ahinsa and tapasya are spiritually futile. It is the foundation on which the entire path rests.",
+      "Aparigraha (non-possessiveness) \u2014 all suffering comes from attachment",
+      "Ratna-traya: Samyak Darshan + Samyak Gyan + Samyak Charitra together. No single element is sufficient."
+    ],
+    correct: 1,
+    explanation: "This is the hardest question. Option D (Ratna-traya) sounds like the safest, most complete answer \u2014 but the question asks for the <strong>single most important</strong> thing, and Ratna-traya is three things, dodging the question. Option A (Ahinsa) is the popular answer, but ahinsa practiced without samyak darshan is mere social conduct, not moksha-marg. Option C (Aparigraha) identifies a symptom, not the root.<br><br><strong>Samyak Darshan (right perception/faith)</strong> is the foundation. Without it, a person can fast, practice ahinsa, study scriptures, and still bind karma because their <strong>fundamental perception of reality is wrong (mithyatva)</strong>. Samyak Darshan means seeing reality as it is: the nature of the soul, karma, and the path. Everything else \u2014 including ahinsa \u2014 becomes meaningful ONLY after samyak darshan is established.",
+    sanskrit: "\u201cSamyak darshan ke bina sab sadhna, andhere mein teer chalaana hai.\u201d"
   }
 ];
 
@@ -702,6 +900,217 @@ function selectAnswer(idx) {
   document.getElementById('progressBar').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
 }
 
+// ---- One-liner wisdom cards with inline SVG art ----
+const wisdomCards = [
+  {
+    text: "Life is a sine wave. Ups will be followed by downs. The goal is to remain equanimous through peaks and troughs.",
+    subtext: "Samta \u2014 the only thing you control is your response.",
+    svg: `<svg viewBox="0 0 400 160" class="wisdom-svg">
+      <defs>
+        <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#e8a838;stop-opacity:0.3"/>
+          <stop offset="50%" style="stop-color:#e8a838;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#e8a838;stop-opacity:0.3"/>
+        </linearGradient>
+        <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#2ecc71;stop-opacity:0.2"/>
+          <stop offset="50%" style="stop-color:#2ecc71;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#2ecc71;stop-opacity:0.2"/>
+        </linearGradient>
+      </defs>
+      <!-- sine wave -->
+      <path d="M 0,80 C 25,20 75,20 100,80 C 125,140 175,140 200,80 C 225,20 275,20 300,80 C 325,140 375,140 400,80"
+        fill="none" stroke="url(#waveGrad)" stroke-width="3" class="sine-path"/>
+      <!-- equanimity line -->
+      <line x1="0" y1="80" x2="400" y2="80" stroke="url(#lineGrad)" stroke-width="1.5" stroke-dasharray="8,6" class="eq-line"/>
+      <!-- labels -->
+      <text x="100" y="18" fill="#e8a83888" font-size="10" text-anchor="middle" font-family="Poppins">sukh</text>
+      <text x="200" y="155" fill="#e8a83888" font-size="10" text-anchor="middle" font-family="Poppins">dukh</text>
+      <text x="300" y="18" fill="#e8a83888" font-size="10" text-anchor="middle" font-family="Poppins">sukh</text>
+      <text x="405" y="76" fill="#2ecc7199" font-size="9" font-family="Poppins" text-anchor="start">samta</text>
+      <!-- dot on the line -->
+      <circle cx="200" cy="80" r="5" fill="#2ecc71" class="pulse-dot"/>
+    </svg>`
+  },
+  {
+    text: "Mukti is a universal concept. Kashay-mukti is the saadhan. All other specific saadhna is alamban.",
+    subtext: "Freedom from Krodh, Maan, Maya, Lobh \u2014 that is the only practice. Everything else is scaffolding.",
+    svg: `<svg viewBox="0 0 400 200" class="wisdom-svg">
+      <defs>
+        <radialGradient id="flameCore" cx="50%" cy="70%" r="50%">
+          <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1"/>
+          <stop offset="40%" style="stop-color:#fff8e1;stop-opacity:0.95"/>
+          <stop offset="70%" style="stop-color:#ffe082;stop-opacity:0.5"/>
+          <stop offset="100%" style="stop-color:#e8a838;stop-opacity:0"/>
+        </radialGradient>
+        <radialGradient id="flameGlow" cx="50%" cy="60%" r="60%">
+          <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.3"/>
+          <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0"/>
+        </radialGradient>
+        <filter id="blur1"><feGaussianBlur stdDeviation="3"/></filter>
+        <filter id="blur2"><feGaussianBlur stdDeviation="8"/></filter>
+      </defs>
+      <!-- outer glow -->
+      <ellipse cx="200" cy="110" rx="60" ry="80" fill="url(#flameGlow)" filter="url(#blur2)" class="flame-breathe"/>
+      <!-- flame outer -->
+      <path d="M 200,30 C 230,60 245,90 240,120 C 238,140 225,160 200,170 C 175,160 162,140 160,120 C 155,90 170,60 200,30 Z"
+        fill="none" stroke="#e8a83844" stroke-width="1" filter="url(#blur1)" class="flame-outer"/>
+      <!-- flame mid -->
+      <path d="M 200,45 C 222,70 232,95 228,118 C 226,135 217,152 200,158 C 183,152 174,135 172,118 C 168,95 178,70 200,45 Z"
+        fill="#fff8e1" opacity="0.15" class="flame-mid"/>
+      <!-- flame inner - bright white -->
+      <path d="M 200,65 C 213,82 218,100 216,115 C 215,126 209,138 200,142 C 191,138 185,126 184,115 C 182,100 187,82 200,65 Z"
+        fill="url(#flameCore)" class="flame-inner"/>
+      <!-- core white point -->
+      <ellipse cx="200" cy="120" rx="8" ry="14" fill="#ffffff" opacity="0.9"/>
+      <!-- text labels for kashays breaking away -->
+      <text x="100" y="60" fill="#e74c3c55" font-size="9" font-family="Poppins" transform="rotate(-15,100,60)" class="kashay-fade">krodh</text>
+      <text x="290" y="55" fill="#e74c3c55" font-size="9" font-family="Poppins" transform="rotate(12,290,55)" class="kashay-fade">maan</text>
+      <text x="95" y="140" fill="#e74c3c55" font-size="9" font-family="Poppins" transform="rotate(10,95,140)" class="kashay-fade">maya</text>
+      <text x="285" y="145" fill="#e74c3c55" font-size="9" font-family="Poppins" transform="rotate(-8,285,145)" class="kashay-fade">lobh</text>
+    </svg>`
+  },
+  {
+    text: "You are not the body. You are not the mind. You are the one watching both.",
+    subtext: "Aatma is the observer \u2014 pure consciousness, untouched by karma. Remembering this is Samyak Darshan.",
+    svg: `<svg viewBox="0 0 400 180" class="wisdom-svg">
+      <defs>
+        <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9"/>
+          <stop offset="30%" style="stop-color:#e8a838;stop-opacity:0.4"/>
+          <stop offset="100%" style="stop-color:#e8a838;stop-opacity:0"/>
+        </radialGradient>
+      </defs>
+      <!-- concentric awareness circles -->
+      <circle cx="200" cy="90" r="70" fill="none" stroke="#e8a83822" stroke-width="1" class="awareness-ring r1"/>
+      <circle cx="200" cy="90" r="50" fill="none" stroke="#e8a83844" stroke-width="1" class="awareness-ring r2"/>
+      <circle cx="200" cy="90" r="30" fill="none" stroke="#e8a83866" stroke-width="1" class="awareness-ring r3"/>
+      <!-- labels on rings -->
+      <text x="200" y="28" fill="#e8a83844" font-size="8" text-anchor="middle" font-family="Poppins">sansaar</text>
+      <text x="200" y="48" fill="#e8a83866" font-size="8" text-anchor="middle" font-family="Poppins">mann</text>
+      <text x="200" y="66" fill="#e8a83888" font-size="8" text-anchor="middle" font-family="Poppins">kaay</text>
+      <!-- central observer point -->
+      <circle cx="200" cy="90" r="12" fill="url(#eyeGlow)"/>
+      <circle cx="200" cy="90" r="4" fill="#ffffff"/>
+      <text x="200" y="120" fill="#ffffffcc" font-size="10" text-anchor="middle" font-family="Poppins" font-weight="600">aatma</text>
+    </svg>`
+  },
+  {
+    text: "Dharm is not what you do at the temple. Dharm is what you do when no one is watching.",
+    subtext: "Swadhyay, samyam, samta \u2014 these need no audience, no stage, no validation.",
+    svg: `<svg viewBox="0 0 400 160" class="wisdom-svg">
+      <defs>
+        <linearGradient id="mirrorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#e8a838;stop-opacity:0.6"/>
+          <stop offset="100%" style="stop-color:#e8a838;stop-opacity:0.05"/>
+        </linearGradient>
+      </defs>
+      <!-- mirror/reflection -->
+      <ellipse cx="200" cy="80" rx="80" ry="55" fill="none" stroke="url(#mirrorGrad)" stroke-width="1.5"/>
+      <!-- person silhouette looking at self -->
+      <circle cx="200" cy="55" r="10" fill="#e8a83866"/>
+      <line x1="200" y1="65" x2="200" y2="95" stroke="#e8a83866" stroke-width="2" stroke-linecap="round"/>
+      <line x1="200" y1="75" x2="185" y2="85" stroke="#e8a83866" stroke-width="2" stroke-linecap="round"/>
+      <line x1="200" y1="75" x2="215" y2="85" stroke="#e8a83866" stroke-width="2" stroke-linecap="round"/>
+      <line x1="200" y1="95" x2="188" y2="115" stroke="#e8a83866" stroke-width="2" stroke-linecap="round"/>
+      <line x1="200" y1="95" x2="212" y2="115" stroke="#e8a83866" stroke-width="2" stroke-linecap="round"/>
+      <!-- inner light -->
+      <circle cx="200" cy="78" r="3" fill="#ffffff88"/>
+      <!-- alone text -->
+      <text x="200" y="145" fill="#e8a83855" font-size="9" text-anchor="middle" font-family="Poppins" letter-spacing="6">ALONE WITH THE SELF</text>
+    </svg>`
+  },
+  {
+    text: "The heaviest chains are golden. Punya feels good \u2014 and that\u2019s exactly why it\u2019s dangerous.",
+    subtext: "Iron chains (paap) you want to break. Golden chains (punya) you want to wear. Both are bondage.",
+    svg: `<svg viewBox="0 0 400 140" class="wisdom-svg">
+      <!-- iron chain left -->
+      <ellipse cx="80" cy="70" rx="22" ry="14" fill="none" stroke="#888" stroke-width="3" opacity="0.5"/>
+      <ellipse cx="115" cy="70" rx="22" ry="14" fill="none" stroke="#888" stroke-width="3" opacity="0.5"/>
+      <ellipse cx="150" cy="70" rx="22" ry="14" fill="none" stroke="#888" stroke-width="3" opacity="0.4"/>
+      <text x="115" y="105" fill="#88888866" font-size="9" text-anchor="middle" font-family="Poppins">paap</text>
+      <!-- golden chain right -->
+      <ellipse cx="250" cy="70" rx="22" ry="14" fill="none" stroke="#e8a838" stroke-width="3" opacity="0.7"/>
+      <ellipse cx="285" cy="70" rx="22" ry="14" fill="none" stroke="#e8a838" stroke-width="3" opacity="0.7"/>
+      <ellipse cx="320" cy="70" rx="22" ry="14" fill="none" stroke="#e8a838" stroke-width="3" opacity="0.6"/>
+      <text x="285" y="105" fill="#e8a83866" font-size="9" text-anchor="middle" font-family="Poppins">punya</text>
+      <!-- equals sign -->
+      <text x="200" y="75" fill="#ffffff44" font-size="20" text-anchor="middle" font-family="Poppins">=</text>
+      <!-- both are bondage -->
+      <text x="200" y="130" fill="#e74c3c55" font-size="9" text-anchor="middle" font-family="Poppins" letter-spacing="4">BOTH ARE BONDAGE</text>
+    </svg>`
+  },
+  {
+    text: "A Tirthankara doesn\u2019t hear your prayers. They are vitaraag \u2014 beyond connection, beyond response.",
+    subtext: "You don\u2019t pray TO them. You meditate ON their qualities \u2014 and awaken those qualities within yourself.",
+    svg: `<svg viewBox="0 0 400 170" class="wisdom-svg">
+      <defs>
+        <linearGradient id="silGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#e8a838;stop-opacity:0.7"/>
+          <stop offset="100%" style="stop-color:#e8a838;stop-opacity:0.1"/>
+        </linearGradient>
+      </defs>
+      <!-- meditating figure silhouette -->
+      <circle cx="200" cy="45" r="14" fill="url(#silGrad)"/>
+      <path d="M 175,100 C 175,70 185,62 200,62 C 215,62 225,70 225,100 Z" fill="url(#silGrad)" opacity="0.5"/>
+      <line x1="175" y1="95" x2="160" y2="85" stroke="#e8a83866" stroke-width="2" stroke-linecap="round"/>
+      <line x1="225" y1="95" x2="240" y2="85" stroke="#e8a83866" stroke-width="2" stroke-linecap="round"/>
+      <!-- no signal lines - crossed out -->
+      <line x1="130" y1="50" x2="145" y2="40" stroke="#e74c3c44" stroke-width="1.5"/>
+      <line x1="125" y1="40" x2="140" y2="50" stroke="#e74c3c44" stroke-width="1.5"/>
+      <line x1="255" y1="50" x2="270" y2="40" stroke="#e74c3c44" stroke-width="1.5"/>
+      <line x1="260" y1="50" x2="275" y2="40" stroke="#e74c3c44" stroke-width="1.5"/>
+      <!-- vitaraag label -->
+      <text x="200" y="130" fill="#e8a83866" font-size="11" text-anchor="middle" font-family="Poppins" font-weight="500" letter-spacing="3">VITARAAG</text>
+      <text x="200" y="150" fill="#ffffff33" font-size="8" text-anchor="middle" font-family="Poppins">beyond raag \u2022 beyond dvesh \u2022 beyond response</text>
+    </svg>`
+  },
+  {
+    text: "You are carrying an infinite backpack of karma. Every moment, you are either adding to it or emptying it. There is no pause button.",
+    subtext: "Aasrav or Nirjara \u2014 one of the two is always happening. Choose consciously.",
+    svg: `<svg viewBox="0 0 400 150" class="wisdom-svg">
+      <!-- hourglass -->
+      <polygon points="170,20 230,20 205,75 230,130 170,130 195,75" fill="none" stroke="#e8a83866" stroke-width="1.5"/>
+      <!-- karma particles falling -->
+      <circle cx="195" cy="40" r="2" fill="#e8a838" opacity="0.8" class="karma-fall f1"/>
+      <circle cx="200" cy="50" r="1.5" fill="#e8a838" opacity="0.6" class="karma-fall f2"/>
+      <circle cx="205" cy="35" r="1.8" fill="#e8a838" opacity="0.7" class="karma-fall f3"/>
+      <circle cx="198" cy="45" r="1.2" fill="#e8a838" opacity="0.5" class="karma-fall f4"/>
+      <!-- accumulated at bottom -->
+      <ellipse cx="200" cy="120" rx="20" ry="6" fill="#e8a83844"/>
+      <!-- arrows -->
+      <text x="270" y="40" fill="#e74c3c66" font-size="9" font-family="Poppins">\u2190 aasrav</text>
+      <text x="270" y="120" fill="#2ecc7166" font-size="9" font-family="Poppins">\u2190 nirjara</text>
+      <!-- no pause -->
+      <text x="200" y="148" fill="#ffffff33" font-size="8" text-anchor="middle" font-family="Poppins" letter-spacing="3">NO PAUSE BUTTON</text>
+    </svg>`
+  },
+  {
+    text: "Bharat Chakravarti ruled the world and attained moksha. Your office job is not the obstacle \u2014 your attachment to it is.",
+    subtext: "Laukik karya karte hue bhi anasakt rehna possible hai.",
+    svg: `<svg viewBox="0 0 400 160" class="wisdom-svg">
+      <defs>
+        <linearGradient id="crownGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#e8a838;stop-opacity:0.8"/>
+          <stop offset="100%" style="stop-color:#e8a838;stop-opacity:0.2"/>
+        </linearGradient>
+      </defs>
+      <!-- crown -->
+      <path d="M 160,70 L 170,40 L 185,60 L 200,30 L 215,60 L 230,40 L 240,70 Z" fill="url(#crownGrad)" opacity="0.6"/>
+      <rect x="160" y="70" width="80" height="10" rx="2" fill="#e8a83866"/>
+      <!-- arrow down to simplicity -->
+      <line x1="200" y1="85" x2="200" y2="110" stroke="#ffffff44" stroke-width="1" stroke-dasharray="4,3"/>
+      <polygon points="195,110 200,118 205,110" fill="#ffffff44"/>
+      <!-- simple dot = free soul -->
+      <circle cx="200" cy="132" r="6" fill="#ffffff" opacity="0.8"/>
+      <circle cx="200" cy="132" r="12" fill="none" stroke="#ffffff22" stroke-width="1"/>
+      <!-- labels -->
+      <text x="290" y="55" fill="#e8a83855" font-size="9" font-family="Poppins">samrat</text>
+      <text x="280" y="135" fill="#ffffff55" font-size="9" font-family="Poppins">siddha</text>
+    </svg>`
+  }
+];
+
 function showResults() {
   document.getElementById('quiz').style.display = 'none';
   const resultsDiv = document.getElementById('results');
@@ -716,6 +1125,18 @@ function showResults() {
   else if (pct >= 60) msg = 'Good understanding, but some common misconceptions still linger. Review the explanations to strengthen your philosophical foundation.';
   else if (pct >= 40) msg = 'Many everyday assumptions don\'t align with core Jain philosophy. This quiz is a starting point \u2014 revisit the explanations carefully.';
   else msg = 'Most of your intuitions followed popular belief rather than Jain siddhant. That\'s okay \u2014 this quiz exists precisely for this reason. Read each explanation and reflect.';
+
+  // Pick 3 random, non-repeating wisdom cards
+  const shuffled = [...wisdomCards].sort(() => Math.random() - 0.5);
+  const picked = shuffled.slice(0, 3);
+
+  const wisdomHTML = picked.map(w => `
+    <div class="wisdom-card">
+      <div class="wisdom-art">${w.svg}</div>
+      <p class="wisdom-text">${w.text}</p>
+      <p class="wisdom-sub">${w.subtext}</p>
+    </div>
+  `).join('');
 
   resultsDiv.innerHTML = `
     <div class="results-card">
@@ -744,16 +1165,21 @@ function showResults() {
         </div>
       </div>
 
+      <div class="wisdom-section">
+        <h3 class="wisdom-heading">Parting Thoughts</h3>
+        ${wisdomHTML}
+      </div>
+
       <div class="key-takeaways">
-        <h3>Key Takeaways to Remember</h3>
+        <h3>Key Takeaways</h3>
         <ul>
           <li>Punya is a by-product of Nirjara, not a goal. Both Punya and Paap are bondage.</li>
           <li>Dharm = only that which leads to Moksha (Samvar + Nirjara). Social good \u2260 Dharm.</li>
           <li>Ahinsa operates at 3 levels (mann, vachan, kaay) \u00d7 3 modes (krit, karit, anumodana) = 9 forms.</li>
           <li>Kashayas (Krodh, Maan, Maya, Lobh) negate even genuine tapasya.</li>
-          <li>Terapanth: No idol worship, no material offerings. Dharm is internal sadhana.</li>
-          <li>Raag (attachment) and Dvesh (aversion) are the root causes of karma bondage.</li>
-          <li>Santhara \u2260 Suicide. It is passionless, conscious withdrawal \u2014 opposite of despair.</li>
+          <li>Bhav determines karma \u2014 the same act binds differently based on internal state.</li>
+          <li>Samvar is possible even within worldly life \u2014 Bharat Chakravarti proved it.</li>
+          <li>Even in unavoidable himsa, conscious limitation (samyam) is the shravak\u2019s dharm.</li>
         </ul>
       </div>
 
