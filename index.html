@@ -238,10 +238,16 @@
     font-size: 0.95em;
   }
 
+  .explanation .exp-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
   .explanation .exp-title {
     font-weight: 600;
     color: var(--accent);
-    margin-bottom: 8px;
     font-size: 0.85em;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -257,6 +263,27 @@
     color: #f0c36d;
     font-size: 0.95em;
   }
+
+  .btn-read-aloud {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border: 1.5px solid #4fc3f7;
+    border-radius: 20px;
+    background: rgba(79, 195, 247, 0.12);
+    color: #4fc3f7;
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .btn-read-aloud:hover { background: rgba(79, 195, 247, 0.25); transform: scale(1.05); }
+  .btn-read-aloud.speaking { background: rgba(79, 195, 247, 0.3); border-color: #81d4fa; box-shadow: 0 0 8px rgba(79, 195, 247, 0.3); }
+  .btn-read-aloud svg { width: 14px; height: 14px; fill: currentColor; }
 
   .btn-next {
     display: block;
@@ -916,12 +943,49 @@ function selectAnswer(idx) {
   // Show explanation
   const expDiv = document.createElement('div');
   expDiv.className = 'explanation';
+  // Build Read Aloud button first so we can place it in the title row
+  const readBtn = document.createElement('button');
+  readBtn.className = 'btn-read-aloud';
+  readBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Listen`;
+
   expDiv.innerHTML = `
-    <div class="exp-title">${isCorrect ? 'Correct!' : 'Not quite.'} Here\'s why:</div>
+    <div class="exp-title-row">
+      <div class="exp-title">${isCorrect ? 'Correct!' : 'Not quite.'} Here\'s why:</div>
+    </div>
     <div>${q.explanation}</div>
     <span class="sanskrit">${q.sanskrit}</span>
   `;
+  // Insert read button into the title row
+  expDiv.querySelector('.exp-title-row').appendChild(readBtn);
   document.getElementById('quizCard').appendChild(expDiv);
+
+  readBtn.onclick = () => {
+    if (speechSynthesis.speaking) {
+      speechSynthesis.cancel();
+      readBtn.classList.remove('speaking');
+      readBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Listen`;
+      return;
+    }
+    const text = expDiv.innerText;
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.rate = 0.95;
+    // Prefer Indian English voice
+    const voices = speechSynthesis.getVoices();
+    const preferred = voices.find(v => v.lang === 'en-IN') || voices.find(v => v.lang.startsWith('en'));
+    if (preferred) utter.voice = preferred;
+    utter.onstart = () => {
+      readBtn.classList.add('speaking');
+      readBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg> Stop`;
+    };
+    utter.onend = () => {
+      readBtn.classList.remove('speaking');
+      readBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Listen`;
+    };
+    speechSynthesis.speak(utter);
+  };
+
+  // Stop speech when moving to next question
+  nextBtn.addEventListener('click', () => speechSynthesis.cancel());
 
   // Update progress
   document.getElementById('progressBar').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
