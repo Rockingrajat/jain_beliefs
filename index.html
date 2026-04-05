@@ -640,7 +640,7 @@ const questions = [
       "Yes \u2014 internal purity matters more than external rituals",
       "No \u2014 these are not rituals. Each practice directly prevents himsa of specific jeev categories (prithvi-kaay, jal-kaay, vayu-kaay). They are ahinsa in action, not performance."
     ],
-    correct: 2,
+    correct: 3,
     explanation: "Both \u201cNo\u201d options reject the student, but for very different reasons. Option D sounds sophisticated (\u201cit's about mental training\u201d) but misses the point. These practices <strong>literally, directly prevent himsa</strong>: sweeping protects prithvi-kaay (earth-bodied) and trasa (mobile) jeev from being crushed; filtering water prevents consuming jal-kaay jeev; walking barefoot increases awareness of trasa jeev underfoot. <strong>The protection of jeev IS the point, not a metaphor for self-discipline.</strong> This is ahinsa in its most concrete, lived form.",
     sanskrit: "\u201cJeev daya hi dharm hai \u2014 yeh acharan kriya nahi, ahinsa ka seedha prayog hai.\u201d"
   },
@@ -715,7 +715,7 @@ const questions = [
       "Because shubh karma is a stepping stone: it weakens ashubh karma's grip, making nirjara easier. You use golden chains to break iron chains, then discard both.",
       "Because shubh karma transforms into nirjara automatically once you reach a certain spiritual stage"
     ],
-    correct: 1,
+    correct: 2,
     explanation: "This is one of Jainism's most elegant logical constructs. Yes, punya IS bondage. But <strong>the practical path requires a sequence</strong>: first replace ashubh (inauspicious) karma with shubh (auspicious) karma, then transcend shubh karma itself through veetaraagta. The classic analogy: <strong>use a golden chain to break iron chains, then discard the golden chain too</strong>. Option A sounds reasonable but treats moksha as postponable \u2014 it doesn't explain WHY shubh karma helps. Option C is factually wrong \u2014 texts do encourage satpravritti. Option D fabricates a mechanism that doesn't exist in Jain karma theory.",
     sanskrit: "\u201cSone ki hathkadi se lohe ki hathkadi todo \u2014 phir dono tyaago.\u201d"
   },
@@ -823,6 +823,21 @@ const questions = [
     correct: 1,
     explanation: "This is the hardest question. Option D (Ratna-traya) sounds like the safest, most complete answer \u2014 but the question asks for the <strong>single most important</strong> thing, and Ratna-traya is three things, dodging the question. Option A (Ahinsa) is the popular answer, but ahinsa practiced without samyak darshan is mere social conduct, not moksha-marg. Option C (Aparigraha) identifies a symptom, not the root.<br><br><strong>Samyak Darshan (right perception/faith)</strong> is the foundation. Without it, a person can fast, practice ahinsa, study scriptures, and still bind karma because their <strong>fundamental perception of reality is wrong (mithyatva)</strong>. Samyak Darshan means seeing reality as it is: the nature of the soul, karma, and the path. Everything else \u2014 including ahinsa \u2014 becomes meaningful ONLY after samyak darshan is established.",
     sanskrit: "\u201cSamyak darshan ke bina sab sadhna, andhere mein teer chalaana hai.\u201d"
+  },
+
+  // --- Q20: Atripti — insatiability of worldly pleasures ---
+  {
+    scenario: "Vacation Blues",
+    question: "Rahul saved for months and took a dream trip to Switzerland. On the flight home, instead of feeling content, he's already scrolling through 'Best of Iceland' reels, thinking: 'Next year, Iceland.' He felt the same after buying his new car, after his promotion, after every milestone. A Jain philosopher would say:",
+    options: [
+      "Rahul has lobh kashaya (greed) — his desire for accumulating experiences is no different from hoarding wealth. He should practice aparigraha with experiences too.",
+      "Rahul wasn't truly present during the trip. If he practiced mindfulness — savoring each moment without thinking about the next — he would feel deep, lasting satisfaction from the same experience.",
+      "This is atripti — a property of vishay-bhog (sensory pleasure) itself, not a flaw in Rahul. No amount of presence or mindfulness changes the fact that indriya-sukh cannot produce lasting tripti.",
+      "Rahul is in pramaad (spiritual carelessness) — he is so consumed by the next thrill that he has no awareness of his own aatma. He needs to pause and do swadhyaya."
+    ],
+    correct: 2,
+    explanation: "Option B is the trap most people fall into — the modern mindfulness answer feels intuitively right. But Jainism's insight about <strong>atripti</strong> is far more radical: <strong>the defect is in the nature of sensory pleasure itself, not in how Rahul experiences it.</strong> Even a perfectly mindful person who savors every bite, every sunset, every moment will find that vishay-bhog shifts the baseline upward. That's why the richest, most-traveled, most 'present' people often feel the emptiest. It's not that they did it wrong — it's that <strong>indriya-sukh is structurally incapable of producing lasting satisfaction</strong>. Mindfulness may slow the treadmill, but it cannot stop it. Recognizing atripti is what redirects the seeker inward: if no external experience can ever close the gap, then tripti (true contentment) must come from the aatma itself.",
+    sanskrit: "\u201cVishay-bhog aag mein ghee hai — jitna daalo, aur bhadakti hai.\u201d"
   }
 ];
 
@@ -845,6 +860,7 @@ function startQuiz() {
 }
 
 function showQuestion() {
+  answered = false;
   const q = questions[currentQ];
   const total = questions.length;
 
@@ -866,7 +882,10 @@ function showQuestion() {
   `;
 }
 
+let answered = false;
 function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
   const q = questions[currentQ];
   const isCorrect = idx === q.correct;
 
